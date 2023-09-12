@@ -1,0 +1,165 @@
+import React from 'react'
+
+class SideBar extends React.Component<any, any> {
+
+
+    constructor(props) {
+        super(props);
+        console.log('init?');
+        this.state = {
+            activeId: 0,
+            isMenuExpanded: true,
+        };
+    }
+
+    handleMenuView = () => {
+        this.setState(prevState => ({
+            isMenuExpanded: !prevState.isMenuExpanded,
+        }));
+    }
+
+    onMenuItemClick(id) {
+        if (this.state.activeId == 1) {
+            this.setState(prevState => ({
+                activeId: 0,
+            }));
+        } else {
+            this.setState(prevState => ({
+                activeId: id,
+            }));
+        }
+    }
+
+    render() {
+        console.log('render menu+++++++++++++++++++++++++++');
+
+        ///
+        const isExpanded = this.state.isMenuExpanded;
+        const isMenuExpanded = isExpanded ? 'sidebar-menu-expanded' : 'sidebar-menu-collapsed';
+        const isMenuItemExpanded = isExpanded ? '' : 'collapsed-element';
+        // const isMenuSubItemExpanded = isExpanded ? '' : 'collapsed-element';
+
+        ///
+        const activeId = this.state.activeId;
+        const activeMenu = activeId == 1 ? 'icon-down' : 'icon-right';
+        const activeMenu1 = (activeId == 1 && isMenuExpanded) ? '' : 'collapsed-element';
+
+        return (
+            // <nav className='sidebar sidebar-menu-collapsed'>
+            <nav className={'sidebar ' + isMenuExpanded}>
+                <div className='sidebar-head'>
+                    <a href='#' onClick={this.handleMenuView} id='justify-icon'>
+                        <span className='glyphicon glyphicon-align-justify'></span>
+                    </a>
+                </div>
+                <ul>
+                    <li>
+                        <a className='expandable' href='#' title='Dashboard' onClick={this.onMenuItemClick.bind(this, 1)}>
+                            <span className='glyphicon glyphicon-home expanded-element'></span>
+                            <span className={isMenuItemExpanded}>
+                                监控台
+                                <span className={'expand-icon ' + activeMenu}></span>
+                            </span>
+
+                        </a>
+                        <ul className={'menu-sub ' + activeMenu1}>
+                            <li>
+                                <a href='#' title='APIs'>
+                                    <span className='glyphicon glyphicon-wrench expanded-element'></span>
+                                    <span>接口</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href='#' title='APIs'>
+                                    <span className='glyphicon glyphicon-wrench expanded-element'></span>
+                                    <span>接口1</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href='#' title='APIs'>
+                                    <span className='glyphicon glyphicon-wrench expanded-element'></span>
+                                    <span>接口2</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a className='expandable' href='#' title='APIs'>
+                            <span className='glyphicon glyphicon-wrench expanded-element'></span>
+                            <span className={isMenuItemExpanded}>
+                                订单模块
+                                <span className='expand-icon icon-right'></span>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a className='expandable' href='#' title='Settings'>
+                            <span className='glyphicon glyphicon-cog expanded-element'></span>
+                            <span className={isMenuItemExpanded}>
+                                配置
+                                <span className='expand-icon icon-right'></span>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a className='expandable' href='#' title='Account'>
+                            <span className='glyphicon glyphicon-user expanded-element'></span>
+                            <span className={isMenuItemExpanded}>
+                                账号
+                                <span className='expand-icon icon-right'></span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            // <aside className="menu">
+            //     <p className="menu-label">
+            //         General
+            //     </p>
+            //     <ul className="menu-list">
+            //         <li><a href='/#'>Dashboard</a></li>
+            //         <li><a href='/#'>Customers</a></li>
+            //     </ul>
+            //     <p className="menu-label">
+            //         Administration
+            //     </p>
+            //     <ul className="menu-list">
+            //         <li><a href='/#'>Team Settings</a></li>
+            //         <li>
+            //             <a href='/#' className="is-active">Manage Your Team</a>
+            //             <ul>
+            //                 <li><a href='/#'>Members</a></li>
+            //                 <li><a href='/#'>Plugins</a></li>
+            //                 <li><a href='/#'>Add a member</a></li>
+            //             </ul>
+            //         </li>
+            //         <li><a href='/#'>Invitations</a></li>
+            //         <li><a href='/#'>Cloud Storage Environment Settings</a></li>
+            //         <li><a href='/#'>Authentication</a></li>
+            //     </ul>
+            //     <p className="menu-label">
+            //         Transactions
+            //     </p>
+            //     <ul className="menu-list">
+            //         <li><a href='/#'>Payments</a></li>
+            //         <li><a href='/#'>Transfers</a></li>
+            //         <li><a href='/#'>Balance</a></li>
+            //     </ul>
+            // </aside>
+
+            // <div className="sidebar">
+            //     {lists.map(list => {
+            //         return (
+            //             <NavLink to={list.path}
+            //                      className={ ({isActive}) => isActive ? 'nav-link active' : 'nav-link' }
+            //             >{list.name}</NavLink>
+            //         )
+            //     })}
+            // </div>
+        )
+    }
+}
+
+export default SideBar
