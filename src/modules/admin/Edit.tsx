@@ -15,6 +15,7 @@ function Edit() {
         username: '',
         password: '',
     })
+    const [errors, setErrors] = useState({})
     const [isLoggingIn, setLoggingIn] = useState(false);
 
 
@@ -66,64 +67,60 @@ function Edit() {
     return (
 
         <XForm>
-            <div className="message-body field">
-                <form action="" onSubmit={handleSubmit}>
-                    <div className="columns">
-                        <div className="column">
-                            {/*<label htmlFor="nombre" className="label"></label>*/}
-                            <div className="field">
-                                <div className="control has-icons-left">
-                                    <input
-                                        type="text"
-                                        className="input"
-                                        name="username"
-                                        value={formData.username}
-                                        placeholder="username"
-                                        onChange={handleFormChange}
-                                        // onChange={(e) => handleFormChange(e.target.value)}
-                                    />
-                                    <span className="icon is-small is-left"><i className="fa fa-user"></i></span>
-                                </div>
-                                <p className="help is-danger">This email is invalid</p>
-                            </div>
+            <div className="columns">
+                <div className="column">
+                    {/*<label htmlFor="nombre" className="label"></label>*/}
+                    <div className="field">
+                        <div className="control has-icons-left">
+                            <input
+                                type="text"
+                                className="input"
+                                name="username"
+                                value={formData.username}
+                                placeholder="username"
+                                onChange={handleFormChange}
+                                // onChange={(e) => handleFormChange(e.target.value)}
+                            />
+                            <span className="icon is-small is-left"><i className="fa fa-user"></i></span>
                         </div>
+                        <p className="help is-danger">This email is invalid</p>
                     </div>
-                    <div className="columns">
-                        <div className="column">
-                            {/*<label htmlFor="nombre" className="label"></label>*/}
-                            <div className="field">
-                                <div className="control has-icons-left">
-                                    <input
-                                        type="password"
-                                        className="input"
-                                        name="password"
-                                        value={formData.password}
-                                        placeholder="password"
-                                        onChange={handleFormChange}
-                                        // onChange={(e) => handleFormChange(e.target.value)}
-                                    />
-                                    <span className="icon is-small is-left"><i className="fa fa-lock"></i></span>
-                                </div>
-                                <p className="help is-danger">This email is invalid</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="columns">
-                        <div className="column">
-                            {/*<label htmlFor="acceso" className="label">Días de acceso: </label>*/}
-                            <div className="control">
-                                <input type="checkbox" id="remember" name="remember" value="Lunes"/>
-                                &nbsp;&nbsp;&nbsp;Remember me
-                                <label htmlFor="remember"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" className={isLoggingIn ? 'button is-primary is-loading' : 'button is-primary'} id="login">
-                        <span className="icon"><i className="fa fa-save"></i></span>
-                        <span>Login</span>
-                    </button>
-                </form>
+                </div>
             </div>
+            <div className="columns">
+                <div className="column">
+                    {/*<label htmlFor="nombre" className="label"></label>*/}
+                    <div className="field">
+                        <div className="control has-icons-left">
+                            <input
+                                type="password"
+                                className="input"
+                                name="password"
+                                value={formData.password}
+                                placeholder="password"
+                                onChange={handleFormChange}
+                                // onChange={(e) => handleFormChange(e.target.value)}
+                            />
+                            <span className="icon is-small is-left"><i className="fa fa-lock"></i></span>
+                        </div>
+                        <p className="help is-danger">This email is invalid</p>
+                    </div>
+                </div>
+            </div>
+            <div className="columns">
+                <div className="column">
+                    {/*<label htmlFor="acceso" className="label">Días de acceso: </label>*/}
+                    <div className="control">
+                        <input type="checkbox" id="remember" name="remember" value="Lunes"/>
+                        &nbsp;&nbsp;&nbsp;Remember me
+                        <label htmlFor="remember"></label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" className={isLoggingIn ? 'button is-primary is-loading' : 'button is-primary'} id="login">
+                <span className="icon"><i className="fa fa-save"></i></span>
+                <span>Login</span>
+            </button>
         </XForm>
 
     )

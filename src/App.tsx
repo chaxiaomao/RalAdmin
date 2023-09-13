@@ -1,15 +1,22 @@
+/// libs
 import React, {createContext} from 'react';
 import {Route, Routes, createBrowserRouter, RouterProvider, LoaderFunctionArgs, redirect} from "react-router-dom";
+
+/// layout
 import AdminLayout from "./layouts/Admin.tsx";
+
+/// pages
 import Home from "./pages/Home.tsx";
 import PageNotFound from "./pages/PageNotFound.tsx";
-import AdminUser from "./modules/admin/User.tsx";
-import EditAdminUser from "./modules/admin/Edit.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
-import {fakeAuthProvider} from "./router/auth.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
+
+/// components
+import {fakeAuthProvider} from "./router/auth.tsx";
 import Loading from "./components/widgets/Loading.tsx";
 
+/// modules
+import {EditAdmin, ListAdmin} from "./modules/admin/index.tsx";
 
 
 function App() {
@@ -57,11 +64,11 @@ const router = createBrowserRouter([
             },
             {
                 path: '/admin/user',
-                Component: AdminUser,
+                Component: ListAdmin,
             },
             {
                 path: '/admin/user/edit',
-                Component: EditAdminUser,
+                Component: EditAdmin,
             }
         ],
     },
