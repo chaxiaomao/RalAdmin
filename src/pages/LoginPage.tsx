@@ -101,7 +101,7 @@ function LoginPage() {
                                             />
                                             <span className="icon is-small is-left"><i className="fa fa-user"></i></span>
                                         </div>
-                                        {errors.password ? <p className="help is-danger"> {errors.password[0]} </p> : ''}
+                                        {errors.username ? <p className="help is-danger"> {errors.username[0]} </p> : ''}
                                     </div>
                                 </div>
                             </div>

@@ -49,7 +49,7 @@ function Layout() {
                             {isLoading ? <Loading /> : ''}
 
                             <Header />
-                            <div className="content-view">
+                            <div className="card-view">
                                 <Outlet />
                             </div>
                         </div>
