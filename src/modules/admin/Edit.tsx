@@ -15,7 +15,10 @@ function Edit() {
         username: '',
         password: '',
     })
-    const [errors, setErrors] = useState({})
+    const [errors, setErrors] = useState({
+        username: '',
+        password: '',
+    })
     const [isLoggingIn, setLoggingIn] = useState(false);
 
 
@@ -30,7 +33,7 @@ function Edit() {
         // 执行你想要的操作，如表单验证、数据处理等
         if (formData.username === '' || formData.password === '') {
             alert('Please fill in all fields.');
-            return ;
+            return;
         }
 
         // 在这里可以进行表单提交或其他操作
@@ -40,7 +43,7 @@ function Edit() {
         // let data = await login(formData.username, formData.password);
         // let data = await login(formData.username, formData.password);
 
-        let data = await httpPost('/admin/user/login', JSON.stringify({
+        let res = await httpPost('/admin/user/login', JSON.stringify({
             LoginForm: {
                 username: formData.username,
                 password: formData.password,
@@ -49,14 +52,17 @@ function Edit() {
 
         setLoggingIn(false);
 
-        console.log(data)
+        if (res.meta.code != '000') {
+            setErrors(res.data);
+        }
 
+        console.log(res)
 
         // return redirect(from);
     };
 
     const handleFormChange = (event) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -66,7 +72,8 @@ function Edit() {
 
     return (
 
-        <XForm>
+        <div className="message-body field">
+            <form action="" onSubmit={handleSubmit}>
             <div className="columns">
                 <div className="column">
                     {/*<label htmlFor="nombre" className="label"></label>*/}
@@ -83,7 +90,8 @@ function Edit() {
                             />
                             <span className="icon is-small is-left"><i className="fa fa-user"></i></span>
                         </div>
-                        <p className="help is-danger">This email is invalid</p>
+                        {errors.username ? <p className="help is-danger"> {errors.username[0]} </p> : ''}
+
                     </div>
                 </div>
             </div>
@@ -103,7 +111,7 @@ function Edit() {
                             />
                             <span className="icon is-small is-left"><i className="fa fa-lock"></i></span>
                         </div>
-                        <p className="help is-danger">This email is invalid</p>
+                        {errors.password ? <p className="help is-danger"> {errors.password[0]} </p> : ''}
                     </div>
                 </div>
             </div>
@@ -117,11 +125,13 @@ function Edit() {
                     </div>
                 </div>
             </div>
-            <button type="submit" className={isLoggingIn ? 'button is-primary is-loading' : 'button is-primary'} id="login">
+            <button type="submit" className={isLoggingIn ? 'button is-primary is-loading' : 'button is-primary'}
+                    id="login">
                 <span className="icon"><i className="fa fa-save"></i></span>
                 <span>Login</span>
             </button>
-        </XForm>
+            </form>
+        </div>
 
     )
 }

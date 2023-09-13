@@ -16,6 +16,10 @@ function LoginPage() {
         username: '',
         password: '',
     })
+    const [errors, setErrors] = useState({
+        username: '',
+        password: '',
+    })
     const [isLoggingIn, setLoggingIn] = useState(false);
 
 
@@ -49,14 +53,15 @@ function LoginPage() {
 
         setLoggingIn(false);
 
-        console.log(res)
+        if (res.meta.code != '000') {
+            setErrors(res.data);
+        }
 
         // window.location.replace(from);
         if (res.data.hasOwnProperty('access_token')) {
             await fakeAuthProvider.signin(res.data);
             window.location.replace(from);
         }
-
 
         // return redirect(from);
     };
@@ -96,7 +101,7 @@ function LoginPage() {
                                             />
                                             <span className="icon is-small is-left"><i className="fa fa-user"></i></span>
                                         </div>
-                                        <p className="help is-danger">This email is invalid</p>
+                                        {errors.password ? <p className="help is-danger"> {errors.password[0]} </p> : ''}
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +121,7 @@ function LoginPage() {
                                             />
                                             <span className="icon is-small is-left"><i className="fa fa-lock"></i></span>
                                         </div>
-                                        <p className="help is-danger">This email is invalid</p>
+                                        {errors.password ? <p className="help is-danger"> {errors.password[0]} </p> : ''}
                                     </div>
                                 </div>
                             </div>
