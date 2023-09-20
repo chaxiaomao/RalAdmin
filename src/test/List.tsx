@@ -41,32 +41,43 @@ function List() {
                 <thead>
                 <tr>
                     <th>
-                        <div className="form-check">
-                            <label className="form-check-label">
-                                <input type="checkbox" className="form-check-input"  />
-                                <span className="form-check-sign"></span>
-                            </label>
-                        </div>
-                    </th>
-                    <th>
                         <div className="field">
                             <label className="label">ID</label>
+                            {/*<div className="control">*/}
+                            {/*    <input className="input" type="text" placeholder="Text input"/>*/}
+                            {/*</div>*/}
                         </div>
                     </th>
+                    <th></th>
                     <th>
                         <div className="field">
                             <label className="label">名字</label>
+                            <div className="control">
+                                <input className="input" type="text" placeholder="Text input"/>
+                            </div>
                         </div>
+
                     </th>
                     <th>
 
                         <div className="field">
                             <label className="label">邮箱</label>
+                            <div className="control">
+                                <input className="input" type="text" placeholder="Text input"/>
+                            </div>
                         </div>
                     </th>
                     <th>
                         <div className="field">
                             <label className="label">状态</label>
+                            <div className="control">
+                                <div className="select">
+                                    <select>
+                                        <option>Select dropdown</option>
+                                        <option>With options</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </th>
                     <th>动作</th>
@@ -74,6 +85,7 @@ function List() {
                 </thead>
                 <tfoot>
                 <tr>
+                    <th><abbr title="Position">ID</abbr></th>
                     <th>
                         <div className="form-check">
                             <label className="form-check-label">
@@ -82,7 +94,6 @@ function List() {
                             </label>
                         </div>
                     </th>
-                    <th><abbr title="Position">ID</abbr></th>
                     <th>名字</th>
                     <th><abbr title="Email">邮箱</abbr></th>
                     <th><abbr title="Status">状态</abbr></th>
@@ -91,6 +102,7 @@ function List() {
                 </tfoot>
                 <tbody>
                 <tr>
+                    <th>1</th>
                     <td>
                         <div className="form-check">
                             <label className="form-check-label">
@@ -98,8 +110,8 @@ function List() {
                                 <span className="form-check-sign"></span>
                             </label>
                         </div>
+
                     </td>
-                    <th>1</th>
                     <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester
                         City</a> <strong>(C)</strong>
                     </td>
@@ -108,8 +120,8 @@ function List() {
                     <td>
                         <nav className="level">
                             <div className="level-left">
-                                <a className="level-item button is-primary">Link</a>
-                                <a className="level-item button is-danger">
+                                <a className="level-item button is-small is-primary">Link</a>
+                                <a className="level-item button is-small is-danger is-outlined">
                                     <span>Delete</span>
                                     <span className="icon is-small"><i className="fa fa-times"></i></span>
                                 </a>
@@ -118,6 +130,7 @@ function List() {
                     </td>
                 </tr>
                 <tr>
+                    <th>1</th>
                     <th>
                         <div className="form-check">
                             <label className="form-check-label">
@@ -126,7 +139,6 @@ function List() {
                             </label>
                         </div>
                     </th>
-                    <th>1</th>
                     <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester
                         City</a> <strong>(C)</strong>
                     </td>
@@ -135,8 +147,9 @@ function List() {
                     <td>
                         <nav className="level">
                             <div className="level-left">
-                                <a className="level-item button is-primary">Link</a>
-                                <a className="level-item button is-danger">
+                                <a className="level-item button is-small is-primary">Link</a>
+                                <a className="level-item button is-small is-danger is-outlined">
+                                    <span>Delete</span>
                                     <span className="icon is-small"><i className="fa fa-times"></i></span>
                                 </a>
                             </div>

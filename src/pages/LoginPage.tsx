@@ -129,9 +129,16 @@ function LoginPage() {
                                 <div className="column">
                                     {/*<label htmlFor="acceso" className="label">Días de acceso: </label>*/}
                                     <div className="control">
-                                        <input type="checkbox" id="remember" name="remember" value="Lunes"/>
-                                        &nbsp;&nbsp;&nbsp;Remember me
-                                        <label htmlFor="remember"></label>
+                                        <div className="form-check">
+                                            <label className="form-check-label">
+                                                <input type="checkbox" className="form-check-input"  />
+                                                <span className="form-check-sign">Remember me</span>
+                                            </label>
+                                        </div>
+
+                                        {/*<input type="checkbox" id="remember" name="remember" value="Lunes"/>*/}
+                                        {/*&nbsp;&nbsp;&nbsp;Remember me*/}
+                                        {/*<label htmlFor="remember"></label>*/}
                                     </div>
                                 </div>
                             </div>
