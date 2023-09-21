@@ -1,7 +1,7 @@
 import React from "react";
 import './index.css';
 
-function XCheckbox({ label, value, checked } : XCheckboxProps) {
+function XCheckbox({ label, value, checked, onChange} : XCheckboxProps) {
 
     return (
         <div className="form-check">
@@ -11,7 +11,7 @@ function XCheckbox({ label, value, checked } : XCheckboxProps) {
                     className="form-check-input"
                     value={value}
                     checked={checked}
-                    // onChange={onChange}
+                    onChange={onChange}
                 />
                 <span className="form-check-sign">{label}</span>
             </label>
@@ -24,7 +24,7 @@ export interface XCheckboxProps {
     label?: String,
     value?: any,
     checked?: boolean,
-    // onChange?: Function,
+    onChange?: Function,
 }
 
 export default XCheckbox;

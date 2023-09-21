@@ -14,7 +14,7 @@ function List() {
 
     const [userList, setUserList] = useState([]);
 
-    const [checkedItems, setCheckedItems] = useState({});
+    const [checkedItems, setCheckedItems] = useState([]);
 
     // 创建一个函数来处理复选框状态的变化
     const handleCheckboxChange = (item) => {
@@ -58,9 +58,13 @@ function List() {
                         </div>
                     </div>
                 </div>
+
+            </div>
+            <div className="columns">
+
                 <div className="column">
                     <div className="field">
-                        <button onClick={kk} className="level-item button is-primary">提交</button>
+                        <button onClick={kk} className="level-item button is-primary">搜索</button>
                     </div>
                 </div>
 
@@ -127,7 +131,7 @@ function List() {
                             <tr key={id}>
                                 <td>
                                     <XCheckbox
-                                        value={item.id}
+                                        // value={item.id}
                                         checked={checkedItems[item.id] || false}
                                         onChange={() => handleCheckboxChange(item)}
                                     />
