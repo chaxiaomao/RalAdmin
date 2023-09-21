@@ -1,15 +1,41 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 
 import {httpPost} from "../../request/http.tsx";
+import XCheckbox from "../../components/checkbox/XCheckbox.tsx";
 
 async function getUserList() {
-    let data = await httpPost('/admin/user/index', {})
+    return await httpPost('/admin/user/index', {})
 }
 
 function List() {
 
-    getUserList();
+
+
+    const [userList, setUserList] = useState([]);
+
+    const [checkedItems, setCheckedItems] = useState({});
+
+    // 创建一个函数来处理复选框状态的变化
+    const handleCheckboxChange = (item) => {
+        setCheckedItems({
+            ...checkedItems,
+            [item.id]: !checkedItems[item.id],
+        });
+    };
+
+    const kk = () => {
+        console.log(checkedItems)
+    };
+
+    // 创建一个副作用函数，该函数会在组件挂载后执行
+    useEffect(() => {
+        getUserList().then((data) => {
+            console.log(data)
+            setUserList(data.data);
+        })
+
+    }, []); // 仅在count发生变化时才执行副作用函数
 
     return (
 
@@ -30,6 +56,11 @@ function List() {
                         <div className="control">
                             <input className="input" type="text" placeholder="Text input"/>
                         </div>
+                    </div>
+                </div>
+                <div className="column">
+                    <div className="field">
+                        <button onClick={kk} className="level-item button is-primary">提交</button>
                     </div>
                 </div>
 
@@ -90,59 +121,38 @@ function List() {
                 </tr>
                 </tfoot>
                 <tbody>
-                <tr>
-                    <td>
-                        <div className="form-check">
-                            <label className="form-check-label">
-                                <input type="checkbox" className="form-check-input"  />
-                                <span className="form-check-sign"></span>
-                            </label>
-                        </div>
-                    </td>
-                    <th>1</th>
-                    <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester
-                        City</a> <strong>(C)</strong>
-                    </td>
-                    <td>38</td>
-                    <td>38</td>
-                    <td>
-                        <nav className="level">
-                            <div className="level-left">
-                                <a className="level-item button is-primary">Link</a>
-                                <a className="level-item button is-danger">
-                                    <span>Delete</span>
-                                    <span className="icon is-small"><i className="fa fa-times"></i></span>
-                                </a>
-                            </div>
-                        </nav>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <div className="form-check">
-                            <label className="form-check-label">
-                                <input type="checkbox" className="form-check-input"  />
-                                <span className="form-check-sign"></span>
-                            </label>
-                        </div>
-                    </th>
-                    <th>1</th>
-                    <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester
-                        City</a> <strong>(C)</strong>
-                    </td>
-                    <td>38</td>
-                    <td>38</td>
-                    <td>
-                        <nav className="level">
-                            <div className="level-left">
-                                <a className="level-item button is-primary">Link</a>
-                                <a className="level-item button is-danger">
-                                    <span className="icon is-small"><i className="fa fa-times"></i></span>
-                                </a>
-                            </div>
-                        </nav>
-                    </td>
-                </tr>
+                {
+                    userList.map((item, id) => {
+                        return (
+                            <tr key={id}>
+                                <td>
+                                    <XCheckbox
+                                        value={item.id}
+                                        checked={checkedItems[item.id] || false}
+                                        onChange={() => handleCheckboxChange(item)}
+                                    />
+                                </td>
+                                <th>1</th>
+                                <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester
+                                    City</a> <strong>(C)</strong>
+                                </td>
+                                <td>38</td>
+                                <td>38</td>
+                                <td>
+                                    <nav className="level">
+                                        <div className="level-left">
+                                            <a className="level-item button is-primary">Link</a>
+                                            <a className="level-item button is-danger">
+                                                <span>Delete</span>
+                                                <span className="icon is-small"><i className="fa fa-times"></i></span>
+                                            </a>
+                                        </div>
+                                    </nav>
+                                </td>
+                            </tr>
+                        )
+                    })
+                }
                 </tbody>
             </table>
 
