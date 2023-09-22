@@ -83,7 +83,7 @@ function LoginPage() {
         <div className="setAsCenter">
 
 
-            <div className="card-tim column is-3" style={{margin: "0 auto"}}>
+            <div className="card-tim column is-3" style={{margin: "0 auto", minWidth: "360px"}}>
                 <form action="" onSubmit={handleSubmit}>
 
                     <div className="card-header">
