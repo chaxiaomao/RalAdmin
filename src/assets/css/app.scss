@@ -7,6 +7,13 @@
 //@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 //@import '@sweetalert2/theme-bulma/bulma.scss';
 
+* {
+  font-family: montserrat,helvetica neue,Arial,sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  //-webkit-text-size-adjust: 100%;
+  //-webkit-tap-highlight-color: transparent;
+}
+
 html {
 }
 
