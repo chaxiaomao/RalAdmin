@@ -1,13 +1,13 @@
 import React, {useContext} from 'react'
 
 
-import {AppContext} from '../components/context/AppContent.tsx';
-import {fakeAuthProvider} from "../router/auth.tsx";
+import {AppContext} from '../context/AppContent.tsx';
+import {fakeAuthProvider} from "../../router/auth.tsx";
 
 
 const Header = () => {
 
-    const { minibar, setMinibar, openMenu, setOpenMenu } = useContext(AppContext);
+    const {minibar, setMinibar, openMenu, setOpenMenu} = useContext(AppContext);
 
     const _setMinibar = () => {
 
@@ -39,7 +39,7 @@ const Header = () => {
     }
 
     return (
-        <nav className="navbar" style={{border:'1px solid #dbdbdb'}}>
+        <nav className="navbar" style={{border: '1px solid #dbdbdb'}}>
             <div className="navbar-brand">
                 <a className="navbar-item" href='#' onClick={_setMinibar} id='justify-icon'>
                     <span className='glyphicon glyphicon-align-justify'></span>
@@ -223,7 +223,8 @@ const Header = () => {
                             <hr className="navbar-divider"/>
                             <div className="navbar-item">
                                 <div>
-                                    <p className="has-text-info is-size-6-desktop"><strong>{fakeAuthProvider.user.username}</strong></p>
+                                    <p className="has-text-info is-size-6-desktop">
+                                        <strong>{fakeAuthProvider.user.username}</strong></p>
 
                                     <small>
                                         <a className="view-all-versions" href="/user/logout">登出</a>

@@ -1,8 +1,9 @@
 import {Component} from "react";
-import menuData from "../router/menu.tsx";
+import menuData from "../../router/menu.tsx";
 import {Link} from "react-router-dom";
+import './index.scss'
 
-import {AppContext} from '../components/context/AppContent.tsx';
+import {AppContext} from '../context/AppContent.tsx';
 
 class Sidebar extends Component<any, any> {
 

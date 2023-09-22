@@ -1,9 +1,10 @@
-import Header from './Header.tsx';
+import Header from '../header/Header.tsx';
 import {Outlet, useNavigation} from "react-router-dom";
-import Sidebar from "./Sidebar.tsx";
+import Sidebar from "../sidebar/Sidebar.tsx";
 import {useState} from "react";
-import {AppContext} from '../components/context/AppContent.tsx';
-import Loading from "../components/widgets/Loading.tsx";
+import {AppContext} from '../context/AppContent.tsx';
+import Loading from "../loading/Loading.tsx";
+import './index.scss'
 
 function Layout() {
 

@@ -1,20 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import {Link} from "react-router-dom";
+import React, {useContext, useEffect, useState} from 'react';
+import {Link, NavLink} from "react-router-dom";
 
 import {httpPost} from "../../request/http.tsx";
 import XCheckbox from "../../components/checkbox/XCheckbox.tsx";
+import {AppContext} from "../../components/context/AppContent.tsx";
+import XButton from "../../components/button/XButton.tsx";
 
-async function getUserList() {
-    return await httpPost('/admin/user/index', {})
-}
 
 function List() {
 
-
+    const { isLoading, setIsLoading, } = useContext(AppContext);
 
     const [userList, setUserList] = useState([]);
 
-    const [checkedItems, setCheckedItems] = useState([]);
+    const [checkedItems, setCheckedItems] = useState({});
+
+    const [checkedItemsAll, setCheckedItemsAll] = useState(false);
 
     // 创建一个函数来处理复选框状态的变化
     const handleCheckboxChange = (item) => {
@@ -24,25 +25,38 @@ function List() {
         });
     };
 
-    const kk = () => {
+    const handleCheckboxChangeAll = () => {
+        let items = {};
+        userList.map((item) => {
+            items[item.id] = !checkedItemsAll;
+        })
+        setCheckedItems(items);
+        setCheckedItemsAll(!checkedItemsAll);
+    };
+
+    async function getUserList() {
+        setIsLoading(true);
+        let res = await httpPost('/admin/user/index', {});
+        setIsLoading(false);
+        return res;
+    }
+
+    const search = () => {
         console.log(checkedItems)
     };
 
     // 创建一个副作用函数，该函数会在组件挂载后执行
     useEffect(() => {
         getUserList().then((data) => {
-            console.log(data)
             setUserList(data.data);
         })
-
-    }, []); // 仅在count发生变化时才执行副作用函数
+    }, []);
 
     return (
 
-
         <div>
             <div className="columns">
-                <div className="column">
+                <div className="column is-3">
                     <div className="field">
                         <label className="label">Name</label>
                         <div className="control">
@@ -50,7 +64,7 @@ function List() {
                         </div>
                     </div>
                 </div>
-                <div className="column">
+                <div className="column is-3">
                     <div className="field">
                         <label className="label">Name</label>
                         <div className="control">
@@ -60,11 +74,13 @@ function List() {
                 </div>
 
             </div>
+
             <div className="columns">
 
                 <div className="column">
                     <div className="field">
-                        <button onClick={kk} className="level-item button is-primary">搜索</button>
+
+                        <XButton onClick={search} color="primary" text="搜索" />
                     </div>
                 </div>
 
@@ -76,12 +92,11 @@ function List() {
                 <thead>
                 <tr>
                     <th>
-                        <div className="form-check">
-                            <label className="form-check-label">
-                                <input type="checkbox" className="form-check-input"  />
-                                <span className="form-check-sign"></span>
-                            </label>
-                        </div>
+                        <XCheckbox
+                            // value={item.id}
+                            checked={checkedItemsAll}
+                            onChange={() => handleCheckboxChangeAll()}
+                        />
                     </th>
                     <th>
                         <div className="field">
@@ -109,14 +124,7 @@ function List() {
                 </thead>
                 <tfoot>
                 <tr>
-                    <th>
-                        <div className="form-check">
-                            <label className="form-check-label">
-                                <input type="checkbox" className="form-check-input"  />
-                                <span className="form-check-sign"></span>
-                            </label>
-                        </div>
-                    </th>
+                    <th></th>
                     <th><abbr title="Position">ID</abbr></th>
                     <th>名字</th>
                     <th><abbr title="Email">邮箱</abbr></th>
@@ -143,15 +151,18 @@ function List() {
                                 <td>38</td>
                                 <td>38</td>
                                 <td>
-                                    <nav className="level">
-                                        <div className="level-left">
-                                            <a className="level-item button is-primary">Link</a>
-                                            <a className="level-item button is-danger">
-                                                <span>Delete</span>
-                                                <span className="icon is-small"><i className="fa fa-times"></i></span>
-                                            </a>
-                                        </div>
-                                    </nav>
+
+                                    <NavLink to='/admin/user/edit' className="btn btn-primary btn-icon btn-sm">
+                                        <i className="fa fa-edit"></i>
+                                    </NavLink>
+
+
+                                    <XButton
+                                        color="danger"
+                                        optionClass="btn-icon btn-sm"
+                                    >
+                                        <i className="fa fa-times"></i>
+                                    </XButton>
                                 </td>
                             </tr>
                         )

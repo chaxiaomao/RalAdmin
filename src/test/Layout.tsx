@@ -1,4 +1,4 @@
-import Header from '../layouts/Header.tsx';
+import Header from '../components/header/Header.tsx';
 import SideBar from './SideBar.tsx';
 import { Outlet } from "react-router-dom";
 

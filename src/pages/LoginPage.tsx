@@ -3,6 +3,8 @@ import {redirect, useLocation} from "react-router-dom";
 import {fakeAuthProvider} from "../router/auth.tsx";
 import {login} from "../request/api.tsx";
 import {httpPost} from "../request/http.tsx";
+import XInput from "../components/input/XInput.tsx";
+import XCheckbox from "../components/checkbox/XCheckbox.tsx";
 
 function LoginPage() {
     let location = useLocation();
@@ -87,58 +89,37 @@ function LoginPage() {
                         <form action="" onSubmit={handleSubmit}>
                             <div className="columns">
                                 <div className="column">
-                                    {/*<label htmlFor="nombre" className="label"></label>*/}
-                                    <div className="field">
-                                        <div className="control has-icons-left">
-                                            <input
-                                                type="text"
-                                                className="input"
-                                                name="username"
-                                                value={formData.username}
-                                                placeholder="username"
-                                                onChange={handleFormChange}
-                                                // onChange={(e) => handleFormChange(e.target.value)}
-                                            />
-                                            <span className="icon is-small is-left"><i className="fa fa-user"></i></span>
-                                        </div>
-                                        {errors.username ? <p className="help is-danger"> {errors.username[0]} </p> : ''}
-                                    </div>
+                                    <XInput
+                                        type="text"
+                                        name="username"
+                                        value={formData.username}
+                                        placeholder="username"
+                                        onChange={handleFormChange}
+                                        errors={errors.username}
+                                    />
                                 </div>
                             </div>
                             <div className="columns">
                                 <div className="column">
                                     {/*<label htmlFor="nombre" className="label"></label>*/}
-                                    <div className="field">
-                                        <div className="control has-icons-left">
-                                            <input
-                                                type="password"
-                                                className="input"
-                                                name="password"
-                                                value={formData.password}
-                                                placeholder="password"
-                                                onChange={handleFormChange}
-                                                // onChange={(e) => handleFormChange(e.target.value)}
-                                            />
-                                            <span className="icon is-small is-left"><i className="fa fa-lock"></i></span>
-                                        </div>
-                                        {errors.password ? <p className="help is-danger"> {errors.password[0]} </p> : ''}
-                                    </div>
+                                    <XInput
+                                        type="password"
+                                        name="password"
+                                        value={formData.password}
+                                        placeholder="password"
+                                        onChange={handleFormChange}
+                                        errors={errors.password}
+                                    />
                                 </div>
                             </div>
                             <div className="columns">
                                 <div className="column">
                                     {/*<label htmlFor="acceso" className="label">Días de acceso: </label>*/}
                                     <div className="control">
-                                        <div className="form-check">
-                                            <label className="form-check-label">
-                                                <input type="checkbox" className="form-check-input"  />
-                                                <span className="form-check-sign">Remember me</span>
-                                            </label>
-                                        </div>
 
-                                        {/*<input type="checkbox" id="remember" name="remember" value="Lunes"/>*/}
-                                        {/*&nbsp;&nbsp;&nbsp;Remember me*/}
-                                        {/*<label htmlFor="remember"></label>*/}
+                                        <XCheckbox
+                                            label="Remember me"
+                                        />
                                     </div>
                                 </div>
                             </div>

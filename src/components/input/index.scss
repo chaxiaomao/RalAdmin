@@ -1,0 +1,42 @@
+
+/// input controller
+//.form-group .form-control, .input-group .form-control {
+  //  padding: 10px;
+  //}
+//
+//.form-control {
+  //  height: unset;
+  //}
+//
+//.form-control {
+  //  background-color: #fff;
+  //  border: 1px solid #ddd;
+  //  border-radius: 4px;
+  //  color: #66615b;
+  //  line-height: normal;
+  //  font-size: 14px;
+  //  transition: color .3s ease-in-out,border-color .3s ease-in-out,background-color .3s ease-in-out;
+  //  box-shadow: none;
+  //}
+//
+//.form-control:focus {
+  //  outline:0;
+  //  border: 1px solid #00d1b2;
+  //}
+
+.control .input {
+    height: unset;
+    padding: 10px;
+    color: #66615b;
+    line-height: normal;
+    transition: color .3s ease-in-out,border-color .3s ease-in-out,background-color .3s ease-in-out;
+//background-color: #fff;
+//border: 1px solid #ddd;
+//border-radius: 4px;
+//font-size: 14px;
+//box-shadow: none;
+}
+
+.control .input:focus {
+    border: 1px solid #00d1b2;
+}

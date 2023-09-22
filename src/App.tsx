@@ -3,17 +3,16 @@ import React, {createContext} from 'react';
 import {Route, Routes, createBrowserRouter, RouterProvider, LoaderFunctionArgs, redirect} from "react-router-dom";
 
 /// layout
-import AdminLayout from "./layouts/Admin.tsx";
+import AdminLayout from "./components/layout/Admin.tsx";
 
 /// pages
 import Home from "./pages/Home.tsx";
 import PageNotFound from "./pages/PageNotFound.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
-import LoginPage from "./pages/LoginPage.tsx";
+import LoginPage from "./pages/LoginPageCard.tsx";
 
 /// components
 import {fakeAuthProvider} from "./router/auth.tsx";
-import Loading from "./components/widgets/Loading.tsx";
 
 /// modules
 import {EditAdmin, ListAdmin} from "./modules/admin/index.tsx";
@@ -21,7 +20,7 @@ import {EditAdmin, ListAdmin} from "./modules/admin/index.tsx";
 
 function App() {
     return (
-        <RouterProvider router={router} fallbackElement={<Loading />} />
+        <RouterProvider router={router} fallbackElement={"Loading..."} />
     );
     // return (
     //   <Routes>
