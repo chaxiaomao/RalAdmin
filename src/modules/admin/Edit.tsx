@@ -5,6 +5,7 @@ import XForm from "../../components/form/XForm.tsx";
 import XInput from "../../components/input/XInput.tsx";
 import XCheckbox from "../../components/checkbox/XCheckbox.tsx";
 import XSelect from "../../components/select/XSelect.tsx";
+import XMultipleSelect from "../../components/select/XMultipleSelect.tsx";
 
 function Edit() {
     let location = useLocation();
@@ -77,6 +78,9 @@ function Edit() {
 
         <div className="message-body field">
             <XSelect />
+            <br/>
+            <XMultipleSelect />
+            <br/>
             <form action="" onSubmit={handleSubmit}>
             <div className="columns">
                 <div className="column">
