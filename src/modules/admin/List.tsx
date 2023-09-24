@@ -49,6 +49,8 @@ function List() {
     useEffect(() => {
         getUserList().then((data) => {
             setUserList(data.data);
+        }).catch(err => {
+
         })
     }, []);
 

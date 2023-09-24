@@ -1,6 +1,5 @@
 import './index.scss'
 import React from "react";
-import {XCheckboxProps} from "../checkbox/XCheckbox";
 
 function XInput({ label, name, value, placeholder, type, onChange, icon, errors} : XInputProps) {
     return (

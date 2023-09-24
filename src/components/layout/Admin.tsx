@@ -5,12 +5,14 @@ import {useState} from "react";
 import {AppContext} from '../context/AppContent.tsx';
 import Loading from "../loading/Loading.tsx";
 import './index.scss'
+import Breadcrumbs from "../breadcrumb/Breadcrumb.tsx";
 
 function Layout() {
 
     const [minibar, setMinibar] = useState(true);
     const [openMenu, setOpenMenu] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [breadcrumb, setBreadcrumb] = useState([]);
 
     let menuClass = !minibar ? 'sidebar-mini' : '';
     if (openMenu) {
@@ -39,20 +41,38 @@ function Layout() {
             minibar, setMinibar,
             openMenu, setOpenMenu,
             isLoading, setIsLoading,
+            breadcrumb, setBreadcrumb,
         }}>
             <div id="admin-layout" className={menuClass}>
                 <div className="columns is-gapless wrapper">
                     <div className="column is-narrow">
-                        <Sidebar />
+                        <Sidebar/>
                     </div>
                     <div className="column">
-                        <div className="main-panel">
-                            {isLoading ? <Loading /> : ''}
 
-                            <Header />
-                            <div className="card-view">
-                                <Outlet />
+
+                        <div className="main-panel">
+                            {isLoading ? <Loading/> : ''}
+
+                            <Header/>
+
+                            <div className="content-view">
+                                {/*<nav className="breadcrumb is-small">*/}
+                                {/*    <ul>*/}
+                                {/*        <li><a>Bulma</a></li>*/}
+                                {/*        <li><a>Documentation</a></li>*/}
+                                {/*        <li><a>Components</a></li>*/}
+                                {/*        <li className="is-active"><a>Breadcrumb</a></li>*/}
+                                {/*    </ul>*/}
+                                {/*</nav>*/}
+                                <Breadcrumbs/>
+                                <div className="card-tim">
+                                    <Outlet/>
+                                </div>
+
                             </div>
+
+
                         </div>
                     </div>
                 </div>

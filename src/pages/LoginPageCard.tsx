@@ -52,19 +52,27 @@ function LoginPage() {
                 username: formData.username,
                 password: formData.password,
             }
-        }))
+        })).then(async res => {
+            if (res.meta.code != '000') {
+                setErrors(res.data);
+                setLoggingIn(false);
+                return;
+            }
 
-        setLoggingIn(false);
+            // window.location.replace(from);
+            // if (res.data.hasOwnProperty('access_token')) {
+            //
+            // }
 
-        if (res.meta.code != '000') {
-            setErrors(res.data);
-        }
-
-        // window.location.replace(from);
-        if (res.data.hasOwnProperty('access_token')) {
             await fakeAuthProvider.signin(res.data);
+
+            setLoggingIn(false);
+
             window.location.replace(from);
-        }
+
+        }).catch(err => {
+            setLoggingIn(false);
+        })
 
         // return redirect(from);
     };

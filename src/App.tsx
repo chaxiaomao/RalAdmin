@@ -60,14 +60,24 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard',
                 Component: Dashboard,
+                handle: {
+                    crumb: 'xxx'
+                }
             },
             {
                 path: '/admin/user',
                 Component: ListAdmin,
+                handle: {
+                    // crumb: (data) => <span>{data.threadName}</span>
+                    crumb: ['管理员列表']
+                }
             },
             {
                 path: '/admin/user/edit',
                 Component: EditAdmin,
+                handle: {
+                    crumb: ['管理员列表', '编辑管理员']
+                }
             }
         ],
     },

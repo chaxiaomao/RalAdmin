@@ -25,9 +25,10 @@ https://versions.bulma.io/0.4.4/documentation/elements/button/
 #admin template
 https://demos.creative-tim.com/paper-dashboard-pro-react/?_ga=2.41656610.1065156433.1693385433-527350151.1692432745#/admin/extended-forms
 
-浅红#ffb3b3
-浅蓝#72d0eb
-钱绿#b1dfbb
+浅红：#ffb3b3
+浅蓝：#72d0eb
+钱绿：#b1dfbb
+葡萄褐：rgb(163,153,153)
 ━ ✚
 
 /// https://stackoverflow.com/questions/48846289/why-is-my-react-component-is-rendering-twice

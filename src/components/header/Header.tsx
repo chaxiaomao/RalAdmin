@@ -224,7 +224,7 @@ const Header = () => {
                             <div className="navbar-item">
                                 <div>
                                     <p className="has-text-info is-size-6-desktop">
-                                        <strong>{fakeAuthProvider.user.username}</strong></p>
+                                        <strong>{fakeAuthProvider.user ? fakeAuthProvider.user.username : ''}</strong></p>
 
                                     <small>
                                         <a className="view-all-versions" href="/user/logout">登出</a>

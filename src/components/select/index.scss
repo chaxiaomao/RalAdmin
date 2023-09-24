@@ -1,9 +1,16 @@
+.css-1gl4k7y {
+  color: rgb(153,153,153);
+  padding: 8px 12px;
+  text-align: center;
+  box-sizing: border-box;
+}
 
 .css-1rhbuit-multiValue {
   background-color: rgb(230, 230, 230);
-  border-radius: 2px;
+  border-radius: 3px;
   display: flex;
-  margin: 2px;
+  margin-right: 3px;
+  margin-bottom: 3px;
   min-width: 0;
   box-sizing: border-box;
 }
@@ -61,9 +68,11 @@
 }
 
 .react-select-input {
-  box-sizing: content-box;
+  //width: 100%;
+  max-width: calc(100% - 8px);
+  //height: 24px;
   //width: 2px;
-  width: 100%;
+  //box-sizing: content-box;
   background: 0 center;
   border: 0;
   //font-size: inherit;
@@ -72,6 +81,22 @@
   padding: 0;
   color: inherit;
   cursor: default;
+
+  //font-size: 0.8rem;
+  margin-left: 2px;
+  margin-right: 2px;
+
+  box-sizing: border-box;
+}
+
+.react-select-input.single-select {
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 0;
 }
 
 .react-select-div {
@@ -91,8 +116,8 @@
 
 .css-1g6gooi {
   margin: 2px;
-  //padding-bottom: 2px;
-  //padding-top: 2px;
+  padding-bottom: 3px;
+  padding-top: 3px;
   visibility: visible;
   color: rgb(51, 51, 51);
   box-sizing: border-box;
@@ -113,10 +138,26 @@
   flex-wrap: wrap;
   padding: 4px 8px;
   position: relative;
-  overflow: hidden;
+  //overflow: hidden;
   box-sizing: border-box;
 }
 
+.css-1uccc91-singleValue {
+  font-size: .8rem;
+  margin-left: 2px;
+  margin-right: 2px;
+  max-width: calc(100% - 8px);
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  top: 50%;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+}
+.react-select.primary .react-select__control .react-select__value-container--has-value .react-select__single-value {
+  color: #51cbce;
+}
 //.css-7pg0cj-a11yText {
 //  z-index: 9999;
 //  border: 0px;
@@ -177,13 +218,15 @@
 }
 
 .react-select .react-select__option {
-  font-size: .8571em;
+  font-size: .85em;
   margin-top: 5px;
   transition: all .15s linear;
   padding: .6rem 1.5rem;
   display: block;
   outline: none;
-  color: #292b2c;
+  //color: #292b2c;
+  //color: rgb(163,153,153);
+  color: rgb(99,99,99);
   cursor: pointer;
 }
 
@@ -255,10 +298,10 @@
   font-size: .9em
 }
 
-.react-select .react-select__control .react-select__value-container--has-value .react-select__single-value {
-  top: 48%;
-  color: #2c2c2c
-}
+//.react-select .react-select__control .react-select__value-container--has-value .react-select__single-value {
+//  top: 50%;
+//  color: #2c2c2c
+//}
 
 .react-select .react-select__control .react-select__placeholder {
   color: #9a9a9a;
@@ -314,9 +357,13 @@
   display: inline-block;
   font-size: 18px;
   line-height: 1;
-  top: 2px;
+  //top: 2px;
   position: relative;
-  margin-right: 3px
+  margin-right: 6px
+}
+
+.css-tlfecz-indicatorContainer:hover {
+  color: #9c9c9c;
 }
 
 .react-select .react-select__control .react-select__indicators .react-select__clear-indicator > * {
@@ -467,4 +514,16 @@
 
 .react-select.react-select--is-disabled .react-select__control--is-disabled {
   background-color: #f9f9f9
+}
+
+.css-26l3qy-menu {
+  display: none;
+}
+
+.css-tlfecz-indicatorContainer {
+  color: rgb(204, 204, 204);
+  display: flex;
+  padding: 8px;
+  transition: color 150ms ease 0s;
+  box-sizing: border-box;
 }

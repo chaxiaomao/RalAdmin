@@ -11,6 +11,7 @@ input {
   font-size: 0.8rem;
   font-family: montserrat,helvetica neue,Arial,sans-serif !important;
   -webkit-font-smoothing: antialiased;
+  box-shadow: none !important;
   //-webkit-text-size-adjust: 100%;
   //-webkit-tap-highlight-color: transparent;
 }
@@ -29,7 +30,15 @@ body {
   overflow-x: hidden
 }
 
+.content-view {
+  margin: 1rem;
+}
+
 /// cover
+
+.breadcrumb:not(:last-child) {
+  margin-bottom: 1rem;
+}
 
 .table.is-narrow td, .table.is-narrow th {
   padding: 0.8em 0;
@@ -42,6 +51,7 @@ body {
 
 .input {
   border-color: #e3e3e3;
+  font-size: .8rem;
 }
 
 ///  cover
@@ -80,8 +90,9 @@ body {
 /// card
 
 .card-tim label {
-  font-size: .8571em;
-  margin-bottom: 5px;
+  display: block;
+  font-size: .85em;
+  margin-bottom: 6px;
   color: #9a9a9a;
 }
 
@@ -90,7 +101,8 @@ body {
   box-shadow: 0 6px 10px -4px rgb(0 0 0 / 15%);
   background-color: #fff;
   color: #252422;
-  margin-bottom: 20px;
+  //margin-bottom: 20px;
+  padding: 1rem;
   position: relative;
   border: 0;
   transition: box-shadow .2s ease, -webkit-transform .3s cubic-bezier(.34, 2, .6, 1);
