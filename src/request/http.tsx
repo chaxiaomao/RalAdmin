@@ -4,8 +4,8 @@ import Swal from 'sweetalert2'
 
 const defaultHeaders = {'Content-Type': 'application/json'}
 
-// const baseUrl = 'http://be.gxservice.local';
-const baseUrl = 'http://localhost:80';
+const baseUrl = 'http://be.gxservice.local';
+// const baseUrl = 'http://localhost:80';
 
 const Toast = Swal.mixin({
     // html: '<a class="button is-primary">Primary</a>',

@@ -1,6 +1,14 @@
 /// libs
 import React, {createContext} from 'react';
-import {Route, Routes, createBrowserRouter, RouterProvider, LoaderFunctionArgs, redirect} from "react-router-dom";
+import {
+    Route,
+    Routes,
+    createBrowserRouter,
+    RouterProvider,
+    LoaderFunctionArgs,
+    redirect,
+    Outlet
+} from "react-router-dom";
 
 /// layout
 import AdminLayout from "./components/layout/Admin.tsx";
@@ -19,90 +27,108 @@ import {EditAdmin, ListAdmin} from "./modules/admin/index.tsx";
 
 
 function App() {
-    return (
-        <RouterProvider router={router} fallbackElement={"Loading..."} />
-    );
     // return (
     //   <Routes>
     //
-    //       <Route path="/" element={<Layout />}>
-    //           <Route index element={<Home />} />
-    //           <Route path="/admin/user" element={<User />} />
-    //           <Route path="/admin/user/edit" element={<Edit />} />
+    //       <Route path="/" element={<AdminLayout />}>
+    //           <Route index element={<Home />} handle={{crumb: () => 'Messages'}} />
+    //           <Route path="/admin/user" element={<ListAdmin />} />
+    //           <Route path="/admin/user/edit" element={<EditAdmin />} />
     //           <Route path="*" element={<PageNotFound />} />
     //       </Route>
     //   </Routes>
     // );
+
+    return <RouterProvider router={getRoutes()} fallbackElement={"Loading..."} />
+
 }
 
-
-const router = createBrowserRouter([
-    {
-        id: "root",
-        path: "/",
-        loader({ request }: LoaderFunctionArgs) {
-            // If the user is not logged in and tries to access `/protected`, we redirect
-            // them to `/login` with a `from` parameter that allows login to redirect back
-            // to this page upon successful authentication
-            if (!fakeAuthProvider.islogin()) {
-                let params = new URLSearchParams();
-                params.set("from", new URL(request.url).pathname);
-                return redirect("/user/login?" + params.toString());
-            }
-            return null;
+const getRoutes = () => {
+    return createBrowserRouter([
+        {
+            id: "root",
+            path: "/",
+            loader({ request }: LoaderFunctionArgs) {
+                // If the user is not logged in and tries to access `/protected`, we redirect
+                // them to `/login` with a `from` parameter that allows login to redirect back
+                // to this page upon successful authentication
+                if (!fakeAuthProvider.islogin()) {
+                    let params = new URLSearchParams();
+                    params.set("from", new URL(request.url).pathname);
+                    return redirect("/user/login?" + params.toString());
+                }
+                return null;
+            },
+            handle: {
+                crumb: '首页'
+            },
+            Component: AdminLayout,
+            children: [
+                {
+                    index: true,
+                    Component: Home,
+                },
+                {
+                    path: 'dashboard',
+                    Component: Dashboard,
+                    handle: {
+                        crumb: '监控面板'
+                    }
+                },
+                {
+                    path: 'admin',
+                    element: <Outlet />,
+                    handle: {
+                        // crumb: (data) => <span>{data.threadName}</span>
+                        crumb: '管理员'
+                    },
+                    children: [
+                        {
+                            index: true,
+                            Component: ListAdmin,
+                        },
+                        {
+                            path: 'user',
+                            Component: ListAdmin,
+                            handle: {
+                                crumb: '用户'
+                            }
+                        },
+                        {
+                            path: 'user/edit?',
+                            Component: EditAdmin,
+                            handle: {
+                                crumb: '编辑'
+                            },
+                        },
+                    ]
+                },
+            ],
         },
-        Component: AdminLayout,
-        children: [
-            {
-                index: true,
-                Component: Home,
-            },
-            {
-                path: '/dashboard',
-                Component: Dashboard,
-                handle: {
-                    crumb: 'xxx'
+        {
+            path: "/user/login",
+            loader: async function loginLoader() {
+                if (fakeAuthProvider.islogin()) {
+                    return redirect("/");
                 }
+                return null;
             },
-            {
-                path: '/admin/user',
-                Component: ListAdmin,
-                handle: {
-                    // crumb: (data) => <span>{data.threadName}</span>
-                    crumb: ['管理员列表']
-                }
-            },
-            {
-                path: '/admin/user/edit',
-                Component: EditAdmin,
-                handle: {
-                    crumb: ['管理员列表', '编辑管理员']
-                }
-            }
-        ],
-    },
-    {
-        path: "/user/login",
-        loader: async function loginLoader() {
-            if (fakeAuthProvider.islogin()) {
+            Component: LoginPage,
+        },
+        {
+            path: "/user/logout",
+            loader: async function logoutLoader() {
+                await fakeAuthProvider.signout();
                 return redirect("/");
-            }
-            return null;
+            },
         },
-        Component: LoginPage,
-    },
-    {
-        path: "/user/logout",
-        loader: async function logoutLoader() {
-            await fakeAuthProvider.signout();
-            return redirect("/");
+        {
+            path: "*",
+            Component: PageNotFound,
         },
-    },
-    {
-        path: "*",
-        Component: PageNotFound,
-    },
-]);
+    ]);
+}
+
 
 
 export default App;

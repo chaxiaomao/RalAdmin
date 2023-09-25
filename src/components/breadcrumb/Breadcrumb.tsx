@@ -10,13 +10,17 @@ function Breadcrumbs() {
         // .map((match) => match.handle.crumb(match.data));
         .map((match) => match.handle.crumb);
 
-    console.log(crumbs)
+
     return (
-        <ol>
-            {crumbs.map((crumb, index) => (
-                <li key={index}>{crumb}</li>
-            ))}
-        </ol>
+        <nav className="breadcrumb is-small">
+            <ul>
+                {
+                    crumbs.map((crumb, index) => (
+                        <li key={index}><a>{crumb}</a></li>
+                    ))
+                }
+            </ul>
+        </nav>
     );
 }
 

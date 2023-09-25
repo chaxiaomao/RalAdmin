@@ -13,13 +13,10 @@ import App from './App.tsx';
 // document.title = 'RA Bluma';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-        <App />
-        {/*<BrowserRouter>*/}
-        {/*    <Routes>*/}
-        {/*        <Route path="/*" element={<Admin />} />*/}
-        {/*        <Route path="/" element={<Navigate to="/dashboard" replace />} />*/}
-        {/*    </Routes>*/}
-        {/*</BrowserRouter>*/}
-    </React.StrictMode>
+    <App />
+// <React.StrictMode>
+//     {/*<BrowserRouter>*/}
+//         <App />
+//     {/*</BrowserRouter>*/}
+// </React.StrictMode>
 );

@@ -2,7 +2,7 @@ import './index.scss'
 import React, {useRef, useState} from "react";
 import XSelectProps from './XSelect.tsx';
 
-function XSelect({label, name, value, optionData, onChange, optionLabel}: XSelectProps) {
+function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XSelectProps) {
 
     const containerRef = useRef(null);
     const inputRef = useRef(null);

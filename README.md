@@ -31,6 +31,9 @@ https://demos.creative-tim.com/paper-dashboard-pro-react/?_ga=2.41656610.1065156
 葡萄褐：rgb(163,153,153)
 ━ ✚
 
+1  React Route Dom 子路由组织问题，缺少Outlet，坑了半天
+2  元素点击删除（不是display=none），属于元素以外的区域，坑了一天
+
 /// https://stackoverflow.com/questions/48846289/why-is-my-react-component-is-rendering-twice
 // You are running your app in strict mode. Go to index.js and comment strict mode tag. You will find a single render.
 //

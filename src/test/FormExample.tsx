@@ -74,7 +74,6 @@ function Edit() {
 
         <div className="">
             <XCalendar
-                icon="fa fa-calendar"
                 placeholder="日期"
             />
             <XSelect

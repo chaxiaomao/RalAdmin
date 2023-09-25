@@ -9,25 +9,14 @@
   background-color: rgb(230, 230, 230);
   border-radius: 3px;
   display: flex;
-  margin-right: 3px;
+  margin-right: 4px;
   margin-bottom: 3px;
   min-width: 0;
   box-sizing: border-box;
 }
 
-.react-select .react-select__control .react-select__value-container--has-value .react-select__multi-value {
-  display: -webkit-inline-flex;
-  display: inline-flex;
-  border-radius: 4px;
-  background-color: initial;
-}
-
 .react-select.info .react-select__control .react-select__value-container--has-value .react-select__multi-value__label, .react-select.info .react-select__control .react-select__value-container--has-value .react-select__single-value {
   color: #51bcda;
-}
-
-.react-select .react-select__control .react-select__value-container--has-value .react-select__multi-value .react-select__multi-value__label {
-  font-size: .9em;
 }
 
 .react-select.info .react-select__multi-value .react-select__multi-value__remove {
@@ -56,7 +45,7 @@
   color: rgb(51, 51, 51);
   font-size: 85%;
   overflow: hidden;
-  padding: 3px 3px 3px 6px;
+  padding: 2px 2px 2px 6px;
   text-overflow: ellipsis;
   white-space: nowrap;
   box-sizing: border-box;
@@ -144,6 +133,7 @@
 
 .css-1uccc91-singleValue {
   font-size: .8rem;
+  line-height: .8rem;
   margin-left: 2px;
   margin-right: 2px;
   max-width: calc(100% - 8px);

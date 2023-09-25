@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, Outlet} from "react-router-dom";
 
 import {httpPost} from "../../request/http.tsx";
 import XCheckbox from "../../components/checkbox/XCheckbox.tsx";
@@ -9,7 +9,6 @@ import XButton from "../../components/button/XButton.tsx";
 
 function List() {
 
-    const { isLoading, setIsLoading, } = useContext(AppContext);
 
     const [userList, setUserList] = useState([]);
 
@@ -35,10 +34,7 @@ function List() {
     };
 
     async function getUserList() {
-        setIsLoading(true);
-        let res = await httpPost('/admin/user/index', {});
-        setIsLoading(false);
-        return res;
+        return await httpPost('/admin/user/index', {});
     }
 
     const search = () => {
@@ -57,6 +53,7 @@ function List() {
     return (
 
         <div>
+
             <div className="columns">
                 <div className="column is-3">
                     <div className="field">
@@ -154,7 +151,7 @@ function List() {
                                 <td>38</td>
                                 <td>
 
-                                    <NavLink to='/admin/user/edit' className="btn btn-primary btn-icon btn-sm">
+                                    <NavLink to={'/admin/user/edit?id=1'} className="btn btn-primary btn-icon btn-sm">
                                         <i className="fa fa-edit"></i>
                                     </NavLink>
 

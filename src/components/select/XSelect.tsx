@@ -4,13 +4,13 @@ import React, {useRef, useState} from "react";
 export interface XSelectProps {
     label?: any,
     name?: any,
-    value?: any,
+    initValue?: any,
     optionData: {} | { any: any },
     onChange?: Function,
     optionLabel?: string,
 }
 
-function XSelect({label, name, value, optionData, onChange, optionLabel}: XSelectProps) {
+function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XSelectProps) {
 
     const containerRef = useRef(null);
     const inputRef = useRef(null);
@@ -23,6 +23,14 @@ function XSelect({label, name, value, optionData, onChange, optionLabel}: XSelec
 
     // 在组件挂载时添加点击事件监听器
     React.useEffect(() => {
+
+        Object.keys(optionData).map((k, i) => {
+            if (initValue == optionData[k]) {
+                setInpVal(k);
+                // setSearchInp(k);
+            }
+        })
+
         document.addEventListener('click', handleFocusClick);
 
         // 在组件卸载时移除事件监听器
