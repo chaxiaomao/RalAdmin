@@ -10,6 +10,12 @@ export interface XSelectProps {
     optionLabel?: string,
 }
 
+/// useage
+// const statusOptions = {
+//     '活动': 1,
+//     '停用': 2,
+// };
+
 function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XSelectProps) {
 
     const containerRef = useRef(null);
@@ -95,13 +101,13 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
     };
 
     const handleOptionClick = (key) => {
-        // todo return key or value
-        if (onChange) {
-            onChange({[key] : optionData[key]})
-        }
         setIsDropdown(false)
         setSearchInp('');
         setInpVal(key);
+        // todo return key or value
+        if (onChange) {
+            onChange({[name ? name : key] : optionData[key]})
+        }
     };
 
     return (

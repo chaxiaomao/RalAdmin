@@ -5,6 +5,7 @@ import XSelect from "../../components/select/XSelect.tsx";
 import XMultipleSelect from "../../components/select/XMultipleSelect.tsx";
 import XCalendar from "../../components/calendar/XCalendar.tsx";
 import {useParams} from "react-router-dom";
+import XPagination from "../../components/pagination/XPagination";
 
 function Edit() {
 
@@ -73,6 +74,9 @@ function Edit() {
     return (
 
         <div className="">
+
+            <XPagination optionData={} />
+
             <XCalendar
                 icon="fa fa-calendar"
                 placeholder="日期"
@@ -88,6 +92,10 @@ function Edit() {
                 label="City"
                 optionData={statusOptions2}
                 onChange={handleFormChange1}
+                initValue={{
+                    'Paris': 1,
+                    'Bucharest': 2,
+                }}
             />
             <br/>
             <form action="" onSubmit={handleSubmit}>

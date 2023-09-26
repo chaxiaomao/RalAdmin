@@ -15,6 +15,11 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
 
     // 在组件挂载时添加点击事件监听器
     React.useEffect(() => {
+
+        if (initValue) {
+            setInpVal(initValue);
+        }
+
         document.addEventListener('click', handleFocusClick);
 
         // 在组件卸载时移除事件监听器
@@ -98,6 +103,11 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
     }
 
     const handleOptionClick = (key) => {
+        // todo return key or value
+        if (onChange) {
+            inpVal[key] = optionData[key]
+            onChange(inpVal)
+        }
         setIsDropdown(false)
         setSearchInp('');
         // setInpVal(...inpVal, {[key]: optionData[key]});
@@ -105,11 +115,6 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
             ...prevData,
             [key]: optionData[key],
         }));
-        // todo return key or value
-        if (onChange) {
-            inpVal[key] = optionData[key]
-            onChange(inpVal)
-        }
     };
 
     return (
