@@ -97,7 +97,7 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
     const handleOptionClick = (key) => {
         // todo return key or value
         if (onChange) {
-            onChange({[key] : optionData[key]})
+            onChange({'selected_id' : optionData[key]})
         }
         setIsDropdown(false)
         setSearchInp('');

@@ -1,3 +1,4 @@
+import '../select/index.scss'
 import './index.scss'
 import React, {useRef, useState} from "react";
 import {inflate} from "zlib";
@@ -6,16 +7,27 @@ export interface XPaginationProps {
     label?: any,
     name?: any,
     initValue?: any,
-    optionData: number,
-    pageCount: number,
+    // optionData: number,
+    totalPageCount: number,
     onChange?: Function,
     optionLabel?: string,
 }
 
-function XPagination({label, name, initValue, optionData, pageCount, onChange, optionLabel}: XPaginationProps) {
+function XPagination({label, name, initValue, totalPageCount, onChange, optionLabel}: XPaginationProps) {
+
+    const pagePreText = '页数 ';
 
     const containerRef = useRef(null);
     const inputRef = useRef(null);
+
+    const optionData = (() => {
+        let data = {}
+        for (let i = 1; i <= totalPageCount; i++) {
+            data[pagePreText + i] = i;
+        }
+        return data;
+    })();
+
 
     const [inpVal, setInpVal] = useState('');
     const [searchInp, setSearchInp] = useState('');
@@ -25,6 +37,8 @@ function XPagination({label, name, initValue, optionData, pageCount, onChange, o
 
     // 在组件挂载时添加点击事件监听器
     React.useEffect(() => {
+
+        setInpVal(pagePreText + (initValue ? initValue : 1));
 
         document.addEventListener('click', handleFocusClick);
 
@@ -75,7 +89,6 @@ function XPagination({label, name, initValue, optionData, pageCount, onChange, o
             //     }
             //     return result;
             // }, {});
-
             let filteredData = Object.keys(optionData)
                 .filter((key) => key.includes(value))
                 .reduce((filteredObj, key) => {
@@ -92,22 +105,38 @@ function XPagination({label, name, initValue, optionData, pageCount, onChange, o
     const handleOptionClick = (key) => {
         // todo return key or value
         if (onChange) {
-            onChange({['page'] : optionData[key]})
+            onChange({'page' : optionData[key]})
         }
         setIsDropdown(false)
         setSearchInp('');
         setInpVal(key);
     };
 
+    const handlePage = (op) => {
+        let cp = optionData[inpVal];
+        let np = cp + op;
+        if (1 <= np && np <= totalPageCount) {
+            setInpVal(pagePreText + np)
+            if (onChange) {
+                onChange({'page' : np})
+            }
+        }
+    }
+
     return (
         // react-select__value-container--has-value
 
-        <div className="columns">
+        <div className="pagination-warp columns">
             <div className="column">
-                First column
+                <a className="pagination-previous">上一页</a>
+
+                {/*<button className="btn btn-outline-primary" onClick={() => handlePage(-1)}>*/}
+                {/*    <span className="icon is-small"><i className="fa fa-arrow-left"></i></span>*/}
+                {/*    <span>上一页</span>*/}
+                {/*</button>*/}
             </div>
             <div className="column">
-                <div className="field">
+                <div className="field pagination-num">
                     {label ? <label>{label}</label> : ''}
                     <div onClick={handleInputClick} ref={containerRef} className="react-select primary css-2b097c-container">
                         {/*<span aria-live="polite" aria-atomic="false" aria-relevant="additions text" className="css-7pg0cj-a11yText"></span>*/}
@@ -172,10 +201,14 @@ function XPagination({label, name, initValue, optionData, pageCount, onChange, o
                         {/*<input name={name} type="hidden" value={value} />*/}
                     </div>
                 </div>
-
             </div>
             <div className="column">
-                Third column
+                {/*<button className="btn btn-outline-primary pagination-right" onClick={() => handlePage(1)}>*/}
+                {/*    <span>下一页 </span>*/}
+                {/*    <span className="icon is-small"><i className="fa fa-arrow-right"></i></span>*/}
+                {/*</button>*/}
+                <a className="pagination-next pagination-right">下一页</a>
+
             </div>
         </div>
 

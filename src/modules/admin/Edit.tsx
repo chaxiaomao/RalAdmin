@@ -5,7 +5,7 @@ import XSelect from "../../components/select/XSelect.tsx";
 import XMultipleSelect from "../../components/select/XMultipleSelect.tsx";
 import XCalendar from "../../components/calendar/XCalendar.tsx";
 import {useParams} from "react-router-dom";
-import XPagination from "../../components/pagination/XPagination";
+import XPagination from "../../components/pagination/XPagination.tsx";
 
 function Edit() {
 
@@ -75,7 +75,10 @@ function Edit() {
 
         <div className="">
 
-            <XPagination optionData={} />
+            <XPagination
+                totalPageCount={10}
+                onChange={handleFormChange1}
+            />
 
             <XCalendar
                 icon="fa fa-calendar"

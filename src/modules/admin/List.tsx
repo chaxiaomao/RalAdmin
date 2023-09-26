@@ -5,6 +5,7 @@ import {httpPost} from "../../request/http.tsx";
 import XCheckbox from "../../components/checkbox/XCheckbox.tsx";
 import {AppContext} from "../../components/context/AppContent.tsx";
 import XButton from "../../components/button/XButton.tsx";
+import XPagination from "../../components/pagination/XPagination.tsx";
 
 
 function List() {
@@ -169,6 +170,11 @@ function List() {
                 }
                 </tbody>
             </table>
+
+            <XPagination
+                totalPageCount={10}
+                // onChange={handleFormChange1}
+            />
 
         </div>
     );
