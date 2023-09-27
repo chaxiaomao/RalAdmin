@@ -1,22 +1,24 @@
-import './index.scss'
 import React, {useRef, useState} from "react";
 
-export interface XSelectProps {
+export interface XPaginationRowProps {
     label?: any,
     name?: any,
     initValue?: any,
-    optionData: {} | { any: any },
+    // optionData: {} | { any: any },
     onChange?: Function,
     optionLabel?: string,
 }
 
-/// useage
-// const statusOptions = {
-//     '活动': 1,
-//     '停用': 2,
-// };
+function XSelect({label, name, initValue, onChange, optionLabel}: XPaginationRowProps) {
 
-function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XSelectProps) {
+    const optionData = {
+        '5 行': 5,
+        '10 行': 10,
+        '20 行': 20,
+        '25 行': 25,
+        '50 行': 50,
+        '100 行': 100,
+    };
 
     const containerRef = useRef(null);
     const inputRef = useRef(null);
@@ -101,16 +103,17 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
     };
 
     const handleOptionClick = (key) => {
+        console.log(key)
         if (optionData[key] == optionData[inpVal]) {
             return;
         }
-        // setIsDropdown(false)
-        setSearchInp('');
-        setInpVal(key);
         // todo return key or value
         if (onChange) {
-            onChange({[name ? name : key] : optionData[key]})
+            onChange({'page_rows' : optionData[key]})
         }
+        setIsDropdown(false)
+        setSearchInp('');
+        setInpVal(key);
     };
 
     return (
@@ -168,11 +171,12 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
                                 Object.keys(searchData).map((key, idx) => {
                                     // const value = optionData[key];
                                     // react-select__option--is-focused
+                                    let c = 'react-select__option css-19jh2ze-option';
                                     if (key == inpVal) {
-
+                                        c += ' react-select__option--is-selected react-select__option--is-focused';
                                     }
                                     return (
-                                        <div key={idx} className="react-select__option css-19jh2ze-option" tabIndex="-1" onClick={() => handleOptionClick(key)}>{key}</div>
+                                        <div key={idx} className={c} tabIndex="-1" onClick={() => handleOptionClick(key)}>{key}</div>
                                     );
                                 })
                         }

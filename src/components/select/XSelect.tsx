@@ -95,6 +95,9 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
     };
 
     const handleOptionClick = (key) => {
+        if (optionData[key] == optionData[inpVal]) {
+            return;
+        }
         // todo return key or value
         if (onChange) {
             onChange({'selected_id' : optionData[key]})
@@ -159,11 +162,12 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
                                 Object.keys(searchData).map((key, idx) => {
                                     // const value = optionData[key];
                                     // react-select__option--is-focused
+                                    let c = 'react-select__option css-19jh2ze-option';
                                     if (key == inpVal) {
-
+                                        c += ' react-select__option--is-selected react-select__option--is-focused';
                                     }
                                     return (
-                                        <div key={idx} className="react-select__option css-19jh2ze-option" tabIndex="-1" onClick={() => handleOptionClick(key)}>{key}</div>
+                                        <div key={idx} className={c} tabIndex="-1" onClick={() => handleOptionClick(key)}>{key}</div>
                                     );
                                 })
                         }

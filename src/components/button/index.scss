@@ -81,7 +81,10 @@
 }
 
 .btn.disabled, .btn:disabled {
-  opacity: .65
+  opacity: .5 !important;
+  filter: alpha(opacity=50) !important;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .btn:not(:disabled):not(.disabled) {
@@ -93,9 +96,9 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 
 .btn.active, .btn.active:focus, .btn.active:hover, .btn:active, .btn:active:focus, .btn:active:hover, .btn:focus, .btn:hover, .navbar .navbar-nav > a.btn.active, .navbar .navbar-nav > a.btn.active:focus, .navbar .navbar-nav > a.btn.active:hover, .navbar .navbar-nav > a.btn:active, .navbar .navbar-nav > a.btn:active:focus, .navbar .navbar-nav > a.btn:active:hover, .navbar .navbar-nav > a.btn:focus, .navbar .navbar-nav > a.btn:hover, .show > .btn.dropdown-toggle, .show > .btn.dropdown-toggle:focus, .show > .btn.dropdown-toggle:hover, .show > .navbar .navbar-nav > a.btn.dropdown-toggle, .show > .navbar .navbar-nav > a.btn.dropdown-toggle:focus, .show > .navbar .navbar-nav > a.btn.dropdown-toggle:hover {
-  background-color: #403d39 !important;
-  color: #fff !important;
-  box-shadow: none !important
+  //background-color: #403d39 !important;
+  //color: #fff !important;
+  //box-shadow: none !important
 }
 
 .btn:not([data-action]):hover, .navbar .navbar-nav > a.btn:not([data-action]):hover {
@@ -103,8 +106,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 
 .btn.disabled, .btn.disabled.active, .btn.disabled.focus, .btn.disabled:active, .btn.disabled:focus, .btn.disabled:hover, .btn:disabled, .btn:disabled.active, .btn:disabled.focus, .btn:disabled:active, .btn:disabled:focus, .btn:disabled:hover, .btn[disabled], .btn[disabled].active, .btn[disabled].focus, .btn[disabled]:active, .btn[disabled]:focus, .btn[disabled]:hover, .navbar .navbar-nav > a.btn.disabled, .navbar .navbar-nav > a.btn.disabled.active, .navbar .navbar-nav > a.btn.disabled.focus, .navbar .navbar-nav > a.btn.disabled:active, .navbar .navbar-nav > a.btn.disabled:focus, .navbar .navbar-nav > a.btn.disabled:hover, .navbar .navbar-nav > a.btn:disabled, .navbar .navbar-nav > a.btn:disabled.active, .navbar .navbar-nav > a.btn:disabled.focus, .navbar .navbar-nav > a.btn:disabled:active, .navbar .navbar-nav > a.btn:disabled:focus, .navbar .navbar-nav > a.btn:disabled:hover, .navbar .navbar-nav > a.btn[disabled], .navbar .navbar-nav > a.btn[disabled].active, .navbar .navbar-nav > a.btn[disabled].focus, .navbar .navbar-nav > a.btn[disabled]:active, .navbar .navbar-nav > a.btn[disabled]:focus, .navbar .navbar-nav > a.btn[disabled]:hover, fieldset[disabled] .btn, fieldset[disabled] .btn.active, fieldset[disabled] .btn.focus, fieldset[disabled] .btn:active, fieldset[disabled] .btn:focus, fieldset[disabled] .btn:hover, fieldset[disabled] .navbar .navbar-nav > a.btn, fieldset[disabled] .navbar .navbar-nav > a.btn.active, fieldset[disabled] .navbar .navbar-nav > a.btn.focus, fieldset[disabled] .navbar .navbar-nav > a.btn:active, fieldset[disabled] .navbar .navbar-nav > a.btn:focus, fieldset[disabled] .navbar .navbar-nav > a.btn:hover {
-  background-color: #66615b;
-  border-color: #66615b
+  //background-color: #66615b;
+  //border-color: #66615b
 }
 
 .btn.btn-simple, .navbar .navbar-nav > a.btn.btn-simple {
@@ -223,7 +226,6 @@ a.btn.disabled, fieldset:disabled a.btn {
   //background-color: #51cbce;
   //background-color: #51cbce;
   border-color: #00d1b2;
-  border-color: #00d1b2
 }
 
 .btn-primary.btn-simple {

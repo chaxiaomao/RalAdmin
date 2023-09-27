@@ -76,8 +76,8 @@ function Edit() {
         <div className="">
 
             <XPagination
-                totalPageCount={10}
-                onChange={handleFormChange1}
+                pageCount={10}
+                onPageChange={handleFormChange1}
             />
 
             <XCalendar

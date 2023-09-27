@@ -6,6 +6,7 @@ import {httpPost} from "../request/http.tsx";
 import XInput from "../components/input/XInput.tsx";
 import XCheckbox from "../components/checkbox/XCheckbox.tsx";
 import XButton from "../components/button/XButton.tsx";
+import {httpCode} from "../config/common.tsx";
 
 function LoginPage() {
     let location = useLocation();
@@ -53,7 +54,7 @@ function LoginPage() {
                 password: formData.password,
             }
         })).then(async res => {
-            if (res.meta.code != '000') {
+            if (res.meta.code != httpCode.SUCCESS) {
                 setErrors(res.data);
                 setLoggingIn(false);
                 return;

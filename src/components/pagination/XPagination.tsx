@@ -2,18 +2,20 @@ import '../select/index.scss'
 import './index.scss'
 import React, {useRef, useState} from "react";
 import {inflate} from "zlib";
+import XPaginationRow from "./XPaginationRow.tsx";
 
 export interface XPaginationProps {
     label?: any,
     name?: any,
-    initValue?: any,
+    currentPage?: any,
     // optionData: number,
-    totalPageCount: number,
-    onChange?: Function,
+    pageCount: number,
+    onPageChange?: Function,
+    onPageRowChange?: Function,
     optionLabel?: string,
 }
 
-function XPagination({label, name, initValue, totalPageCount, onChange, optionLabel}: XPaginationProps) {
+function XPagination({label, name, currentPage, pageCount, onPageRowChange, onPageChange, optionLabel}: XPaginationProps) {
 
     const pagePreText = '页数 ';
 
@@ -22,7 +24,7 @@ function XPagination({label, name, initValue, totalPageCount, onChange, optionLa
 
     const optionData = (() => {
         let data = {}
-        for (let i = 1; i <= totalPageCount; i++) {
+        for (let i = 1; i <= pageCount; i++) {
             data[pagePreText + i] = i;
         }
         return data;
@@ -38,7 +40,7 @@ function XPagination({label, name, initValue, totalPageCount, onChange, optionLa
     // 在组件挂载时添加点击事件监听器
     React.useEffect(() => {
 
-        setInpVal(pagePreText + (initValue ? initValue : 1));
+        setInpVal(pagePreText + (currentPage ? currentPage : 1));
 
         document.addEventListener('click', handleFocusClick);
 
@@ -103,111 +105,124 @@ function XPagination({label, name, initValue, totalPageCount, onChange, optionLa
     };
 
     const handleOptionClick = (key) => {
-        // todo return key or value
-        if (onChange) {
-            onChange({'page' : optionData[key]})
+        console.log('handleOptionClick')
+        if (optionData[key] == optionData[inpVal]) {
+            return;
         }
-        setIsDropdown(false)
+        // todo return key or value
+        if (onPageChange) {
+            onPageChange({'page' : optionData[key]})
+        }
+        // setIsDropdown(false)
         setSearchInp('');
         setInpVal(key);
     };
 
     const handlePage = (op) => {
-        let cp = optionData[inpVal];
-        let np = cp + op;
-        if (1 <= np && np <= totalPageCount) {
-            setInpVal(pagePreText + np)
-            if (onChange) {
-                onChange({'page' : np})
+        let currentCount = optionData[inpVal];
+        let nextCount = currentCount + op;
+        if (1 <= nextCount && nextCount <= pageCount) {
+            setInpVal(pagePreText + nextCount)
+            if (onPageChange) {
+                onPageChange({'page' : nextCount})
             }
         }
     }
+
 
     return (
         // react-select__value-container--has-value
 
         <div className="pagination-warp columns">
             <div className="column">
-                <a className="pagination-previous">上一页</a>
+                {/*<a className="pagination-previous" onClick={() => handlePage(-1)}>上一页</a>*/}
 
-                {/*<button className="btn btn-outline-primary" onClick={() => handlePage(-1)}>*/}
-                {/*    <span className="icon is-small"><i className="fa fa-arrow-left"></i></span>*/}
-                {/*    <span>上一页</span>*/}
-                {/*</button>*/}
+                <button className={optionData[inpVal] == 1 ? "btn btn-primary disabled" : "btn btn-primary"} onClick={() => handlePage(-1)}>
+                    <span className="icon is-small"><i className="fa fa-arrow-left"></i></span>
+                    <span>上一页</span>
+                </button>
             </div>
             <div className="column">
-                <div className="field pagination-num">
-                    {label ? <label>{label}</label> : ''}
-                    <div onClick={handleInputClick} ref={containerRef} className="react-select primary css-2b097c-container">
-                        {/*<span aria-live="polite" aria-atomic="false" aria-relevant="additions text" className="css-7pg0cj-a11yText"></span>*/}
-                        <div className={isFocusInput ? "react-select__control react-select__control--menu-is-open react-select__control--is-focused css-1pahdxg-control" : "react-select__control react-select__control--menu-is-open css-1pahdxg-control"}>
-                            <div className={inpVal == '' ? "react-select__value-container react-select__placeholder css-1hwfws3" : "react-select__value-container react-select__value-container--has-value css-1hwfws3"}>
-                                <div className="react-select__single-value css-1uccc91-singleValue">{inpVal == '' && searchInp == '' ? '请选择' : inpVal}</div>
+                <div className="columns">
+                    <div className="column">
+                        <div className="field">
+                            {label ? <label>{label}</label> : ''}
+                            <div onClick={handleInputClick} ref={containerRef} className="react-select primary css-2b097c-container">
+                                {/*<span aria-live="polite" aria-atomic="false" aria-relevant="additions text" className="css-7pg0cj-a11yText"></span>*/}
+                                <div className={isFocusInput ? "react-select__control react-select__control--menu-is-open react-select__control--is-focused css-1pahdxg-control" : "react-select__control react-select__control--menu-is-open css-1pahdxg-control"}>
+                                    <div className={inpVal == '' ? "react-select__value-container react-select__placeholder css-1hwfws3" : "react-select__value-container react-select__value-container--has-value css-1hwfws3"}>
+                                        <div className="react-select__single-value css-1uccc91-singleValue">{inpVal == '' && searchInp == '' ? '请选择' : inpVal}</div>
 
-                                <div className="css-1g6gooi">
-                                    <input
-                                        ref={inputRef}
-                                        // onBlur={handleBlur}
-                                        // onClick={handleInputClick}
-                                        autoCapitalize="none"
-                                        autoComplete="off"
-                                        autoCorrect="off"
-                                        spellCheck="false"
-                                        tabIndex="0"
-                                        type="text"
-                                        aria-autocomplete="list"
-                                        name="status"
-                                        value={searchInp}
-                                        className="react-select-input single-select"
-                                        onChange={handleChange}
-                                        style={{width: '100%'}}
-                                        // placeholder="选择状态"
-                                    />
+                                        <div className="css-1g6gooi">
+                                            <input
+                                                ref={inputRef}
+                                                // onBlur={handleBlur}
+                                                // onClick={handleInputClick}
+                                                autoCapitalize="none"
+                                                autoComplete="off"
+                                                autoCorrect="off"
+                                                spellCheck="false"
+                                                tabIndex="0"
+                                                type="text"
+                                                aria-autocomplete="list"
+                                                name="status"
+                                                value={searchInp}
+                                                className="react-select-input single-select"
+                                                onChange={handleChange}
+                                                style={{width: '100%'}}
+                                                // placeholder="选择状态"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="react-select__indicators css-1wy0on6">
+                                        {/*<span className="react-select__indicator-separator css-1okebmr-indicatorSeparator"></span>*/}
+                                        <div className="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer" aria-hidden="true">
+                                            <svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"
+                                                 className="css-8mmkcg">
+                                                <path
+                                                    d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="react-select__indicators css-1wy0on6">
-                                {/*<span className="react-select__indicator-separator css-1okebmr-indicatorSeparator"></span>*/}
-                                <div className="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer" aria-hidden="true">
-                                    <svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"
-                                         className="css-8mmkcg">
-                                        <path
-                                            d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path>
-                                    </svg>
+
+                                <div className={isDropdown ? "react-select__menu" : "react-select__menu css-26l3qy-menu"}>
+                                    <div className="react-select__menu-list react-select__menu-list--is-multi css-11unzgr">
+                                        {optionLabel ?
+                                            <div className="react-select__option react-select__option--is-disabled  css-19jh2ze-option" tabIndex="-1">{optionLabel}</div> : ''}
+                                        {
+                                            searchInp != '' && Object.keys(searchData).length == 0 ?
+                                                <div className="react-select__menu-notice react-select__menu-notice--no-options css-1gl4k7y">无选项</div>
+                                                :
+                                                Object.keys(searchData).map((key, idx) => {
+                                                    // const value = optionData[key];
+                                                    // react-select__option--is-focused
+                                                    let c = 'react-select__option css-19jh2ze-option';
+                                                    if (key == inpVal) {
+                                                        c += ' react-select__option--is-selected react-select__option--is-focused';
+                                                    }
+                                                    return (
+                                                        <div key={idx} className={c} tabIndex="-1" onClick={() => handleOptionClick(key)}>{key}</div>
+                                                    );
+                                                })
+                                        }
+                                    </div>
                                 </div>
+                                {/*<input name={name} type="hidden" value={value} />*/}
                             </div>
                         </div>
-
-                        <div className={isDropdown ? "react-select__menu" : "react-select__menu css-26l3qy-menu"}>
-                            <div className="react-select__menu-list react-select__menu-list--is-multi css-11unzgr">
-                                {optionLabel ?
-                                    <div className="react-select__option react-select__option--is-disabled  css-19jh2ze-option" tabIndex="-1">{optionLabel}</div> : ''}
-                                {
-                                    searchInp != '' && Object.keys(searchData).length == 0 ?
-                                        <div className="react-select__menu-notice react-select__menu-notice--no-options css-1gl4k7y">无选项</div>
-                                        :
-                                        Object.keys(searchData).map((key, idx) => {
-                                            // const value = optionData[key];
-                                            // react-select__option--is-focused
-                                            if (key == inpVal) {
-
-                                            }
-                                            return (
-                                                <div key={idx} className="react-select__option css-19jh2ze-option" tabIndex="-1" onClick={() => handleOptionClick(key)}>{key}</div>
-                                            );
-                                        })
-                                }
-                            </div>
-                        </div>
-                        {/*<input name={name} type="hidden" value={value} />*/}
+                    </div>
+                    <div className="column">
+                        <XPaginationRow onChange={onPageRowChange} initValue={10} />
                     </div>
                 </div>
             </div>
             <div className="column">
-                {/*<button className="btn btn-outline-primary pagination-right" onClick={() => handlePage(1)}>*/}
-                {/*    <span>下一页 </span>*/}
-                {/*    <span className="icon is-small"><i className="fa fa-arrow-right"></i></span>*/}
-                {/*</button>*/}
-                <a className="pagination-next pagination-right">下一页</a>
+                <button className={optionData[inpVal] == pageCount ? "btn btn-primary pagination-right disabled" : "btn btn-primary pagination-right"} onClick={() => handlePage(1)}>
+                    <span>下一页 </span>
+                    <span className="icon is-small"><i className="fa fa-arrow-right"></i></span>
+                </button>
+                {/*<a className="pagination-next pagination-right" onClick={() => handlePage(1)}>下一页</a>*/}
 
             </div>
         </div>

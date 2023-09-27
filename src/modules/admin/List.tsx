@@ -1,20 +1,24 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Link, NavLink, Outlet} from "react-router-dom";
 
-import {httpPost} from "../../request/http.tsx";
+import {httpGet, httpPost} from "../../request/http.tsx";
 import XCheckbox from "../../components/checkbox/XCheckbox.tsx";
 import {AppContext} from "../../components/context/AppContent.tsx";
 import XButton from "../../components/button/XButton.tsx";
 import XPagination from "../../components/pagination/XPagination.tsx";
-
+import {status} from '../../config/common.tsx'
 
 function List() {
 
+    // let currentPage = 1;
+    // let pageRows = 10;
 
     const [userList, setUserList] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [currentPageRows, setCurrentPageRows] = useState(10);
 
     const [checkedItems, setCheckedItems] = useState({});
-
     const [checkedItemsAll, setCheckedItemsAll] = useState(false);
 
     // 创建一个函数来处理复选框状态的变化
@@ -34,8 +38,16 @@ function List() {
         setCheckedItemsAll(!checkedItemsAll);
     };
 
-    async function getUserList() {
-        return await httpPost('/admin/user/index', {});
+    function getUserList() {
+        console.log('currentPage:' + currentPage)
+        console.log('pageSize:' + currentPageRows)
+
+        httpGet('/admin/user/index', {page: currentPage, pageSize: currentPageRows}).then((data) => {
+            setUserList(data.data);
+            setPageCount(data.meta.extraData.pageCount);
+        }).catch(err => {
+
+        });
     }
 
     const search = () => {
@@ -44,12 +56,16 @@ function List() {
 
     // 创建一个副作用函数，该函数会在组件挂载后执行
     useEffect(() => {
-        getUserList().then((data) => {
-            setUserList(data.data);
-        }).catch(err => {
+        getUserList();
+    }, [currentPage, currentPageRows]);
 
-        })
-    }, []);
+    const handlePage = (val) => {
+        setCurrentPage(val.page)
+    };
+
+    const handlePageRow = (val) => {
+        setCurrentPageRows(val.page_rows)
+    };
 
     return (
 
@@ -86,7 +102,13 @@ function List() {
 
             </div>
 
-            <hr/>
+
+            <XPagination
+                pageCount={pageCount}
+                currentPage={currentPage}
+                onPageChange={handlePage}
+                onPageRowChange={handlePageRow}
+            />
 
             <table className="table is-narrow is-striped">
                 <thead>
@@ -144,15 +166,14 @@ function List() {
                                         onChange={() => handleCheckboxChange(item)}
                                     />
                                 </td>
-                                <th>1</th>
-                                <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester
-                                    City</a> <strong>(C)</strong>
+                                <th>{item.id}</th>
+                                <td><Link to={'/admin/user/edit?id=' + item.id} title={item.username}>{item.username}</Link>
                                 </td>
-                                <td>38</td>
-                                <td>38</td>
+                                <td>{item.email}</td>
+                                <td>{status[item.status]}</td>
                                 <td>
 
-                                    <NavLink to={'/admin/user/edit?id=1'} className="btn btn-primary btn-icon btn-sm">
+                                    <NavLink to={'/admin/user/edit?id=' + item.id} className="btn btn-success btn-icon btn-sm">
                                         <i className="fa fa-edit"></i>
                                     </NavLink>
 
@@ -171,10 +192,6 @@ function List() {
                 </tbody>
             </table>
 
-            <XPagination
-                totalPageCount={10}
-                // onChange={handleFormChange1}
-            />
 
         </div>
     );

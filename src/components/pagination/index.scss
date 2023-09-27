@@ -1,27 +1,33 @@
 .pagination-warp {
   //width: 600px;
+  margin-bottom: 0! important;
 }
 
-.pagination-num {
-  max-width: 120px;
-  margin: 0 auto;
-}
-
-.pagination-warp button,
-.pagination-warp .pagination-previous,
-.pagination-warp .pagination-next
-{
-  //width: 100%;
-  font-size: .9rem;
+.pagination-warp .column {
+  padding-bottom: 0 !important;
 }
 
 .pagination-warp .btn {
-  padding: 9px 22px;
+  font-size: .9rem;
+  width: 80%;
+  //padding: 9px 22px;
 }
 
 .pagination-warp .pagination-right {
   float: right;
 }
+
+///
+.pagination-center {
+  -webkit-justify-content: center!important;
+  justify-content: center!important;
+}
+
+.pagination-num, .pagination-row {
+  max-width: 50%;
+  margin: 0 auto;
+}
+///
 
 .btn-outline-primary {
   background: 0 0;
