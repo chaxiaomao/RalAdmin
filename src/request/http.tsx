@@ -1,5 +1,7 @@
 import {fakeAuthProvider} from "../router/auth.tsx";
 import {httpCode} from '../config/common.tsx'
+import XAlert from '../components/alert/XAlert.tsx'
+import XNotification from '../components/alert/XNotificition.tsx'
 import Swal from 'sweetalert2'
 
 const defaultHeaders = {'Content-Type': 'application/json'}
@@ -107,11 +109,15 @@ async function handleResp(response) {
     let res = await response.json();
 
     if (res.meta.code != httpCode.SUCCESS && alert) {
-        await Toast.fire({
-            // icon: 'warning',
-            title: res.meta.msg,
-            position: 'top',
-        })
+        // XAlert.show({title: 'xxx'});
+
+        // await Toast.fire({
+        //     icon: 'error',
+        //     title: res.meta.msg != '' ?  res.meta.msg : '请求操作失败',
+        //     position: 'top',
+        // })
+
+        XNotification.show({title: 'xxx'})
     }
 
     // const Toast = Swal.mixin({
