@@ -22,17 +22,6 @@
   width: calc(100% - 80px);
 }
 
-.card-view {
-  position: relative;
-  margin: 1rem;
-  //border: 1px solid #00d1b2;
-  //border-radius: 3px;
-  padding: 1rem;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 10px -4px rgba(0, 0, 0, .15);
-}
-
 .main-panel {
   @media screen and (max-width: 991px) {
     width: 100%;

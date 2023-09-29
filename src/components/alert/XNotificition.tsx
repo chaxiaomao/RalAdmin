@@ -72,7 +72,6 @@ class XNotification extends React.Component<IModalProps, IModalState> {
                 this.props.onClose && this.props.onClose()
                 clearTimeout(this.timeoutClose)
                 this.timeoutClose = null;
-                console.log(this.timeoutClose)
             }, 600)
 
             console.log(this.timeoutClose)

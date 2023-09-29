@@ -95,6 +95,13 @@ const getRoutes = () => {
                             }
                         },
                         {
+                            path: 'user/add',
+                            Component: EditAdmin,
+                            handle: {
+                                crumb: '新增'
+                            },
+                        },
+                        {
                             path: 'user/edit?',
                             Component: EditAdmin,
                             handle: {

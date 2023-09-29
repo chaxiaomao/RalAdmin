@@ -2,11 +2,25 @@ import {fakeAuthProvider} from "../router/auth.tsx";
 import {httpCode} from '../config/common.tsx'
 import XAlert from '../components/alert/XAlert.tsx'
 import XNotification from '../components/alert/XNotificition.tsx'
+import Swal from 'sweetalert2'
+
 const defaultHeaders = {'Content-Type': 'application/json'}
 
-// const baseUrl = 'http://be.gxservice.local';
-const baseUrl = 'http://localhost:21080';
+const baseUrl = 'http://be.gxservice.local';
+// const baseUrl = 'http://localhost:80';
 
+const Toast = Swal.mixin({
+    // html: '<a class="button is-primary">Primary</a>',
+    showCancelButton: false,
+    showConfirmButton: false,
+    showCloseButton: true,
+    showClass: {
+        popup: 'animate__animated animate__fadeInDown animate__faster'
+    },
+    hideClass: {
+        popup: 'animate__animated animate__fadeOutUp animate__faster'
+    }
+})
 
 const getAuth = (header = {}) => {
 
@@ -20,14 +34,23 @@ const getAuth = (header = {}) => {
 
 async function alertAuth() {
     await fakeAuthProvider.signout();
-
-    XNotification.show({title: '认证到期，3秒后跳转到登录..'})
-
-    let timeoutClose = setInterval(() => {
-        clearInterval(timeoutClose)
-        window.location.replace('/');
-    }, 3000)
-
+    let timerInterval
+    Toast.fire({
+        icon: 'question',
+        title: '认证到期，3秒后跳转到登录..',
+        // html: '认证到期，3秒后跳转到登录...',
+        timer: 3000,
+        timerProgressBar: true,
+        position: 'top-end',
+        willClose: () => {
+            clearInterval(timerInterval)
+        }
+    }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+            window.location.replace('/');
+        }
+    })
 }
 
 export function httpGet(url, queryParams = {}, alert = false) {
@@ -54,7 +77,7 @@ export function httpPost(url, data, alert = false, header = {}) {
     return fetch(baseUrl + url, {
         method: 'post',
         headers: getAuth(header),
-        body: data
+        body: JSON.stringify(data)
     }).then(response => {
 
         return handleResp(response);
@@ -74,7 +97,11 @@ async function handleResp(response) {
             return Promise.reject(error);
         }
 
-        XNotification.show({title: error})
+        await Toast.fire({
+            // icon: 'error',
+            title: error,
+            position: 'top',
+        })
 
         return Promise.reject(error);
     }
@@ -84,8 +111,26 @@ async function handleResp(response) {
     if (res.meta.code != httpCode.SUCCESS && alert) {
         // XAlert.show({title: 'xxx'});
 
-        XNotification.show({title: res.meta.msg != '' ?  res.meta.msg : '请求操作失败'})
+        // await Toast.fire({
+        //     icon: 'error',
+        //     title: res.meta.msg != '' ?  res.meta.msg : '请求操作失败',
+        //     position: 'top',
+        // })
+
+        XNotification.show({title: 'xxx'})
     }
+
+    // const Toast = Swal.mixin({
+    //     toast: true,
+    //     position: 'top-end',
+    //     showConfirmButton: false,
+    //     timer: 3000,
+    //     timerProgressBar: true,
+    //     didOpen: (toast) => {
+    //         toast.addEventListener('mouseenter', Swal.stopTimer)
+    //         toast.addEventListener('mouseleave', Swal.resumeTimer)
+    //     }
+    // })
 
     return res;
 

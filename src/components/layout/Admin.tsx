@@ -6,6 +6,7 @@ import {AppContext} from '../context/AppContent.tsx';
 import Loading from "../loading/Loading.tsx";
 import './index.scss'
 import Breadcrumbs from "../breadcrumb/Breadcrumb.tsx";
+import XFooter from "../footer/XFooter.tsx";
 
 function Layout() {
 
@@ -60,9 +61,10 @@ function Layout() {
 
                                 <Breadcrumbs/>
 
-                                <div className="card-tim">
-                                    <Outlet/>
-                                </div>
+                                <Outlet/>
+
+
+                                <XFooter />
 
                             </div>
 

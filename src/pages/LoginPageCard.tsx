@@ -7,6 +7,7 @@ import XInput from "../components/input/XInput.tsx";
 import XCheckbox from "../components/checkbox/XCheckbox.tsx";
 import XButton from "../components/button/XButton.tsx";
 import {httpCode} from "../config/common.tsx";
+import XCard from "../components/card/XCard.tsx";
 
 function LoginPage() {
     let location = useLocation();
@@ -91,7 +92,10 @@ function LoginPage() {
 
         <div className="setAsCenter">
 
-            <div className="card-tim column is-3" style={{margin: "0 auto", minWidth: "360px"}}>
+            <XCard
+                xClass="column is-3"
+                xStyle={{margin: "0 auto", minWidth: "360px"}}
+            >
                 <form action="" onSubmit={handleSubmit}>
 
                     <div className="card-header">
@@ -135,7 +139,7 @@ function LoginPage() {
 
                 </form>
 
-            </div>
+            </XCard>
 
         </div>
 

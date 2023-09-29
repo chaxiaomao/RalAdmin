@@ -7,6 +7,7 @@ import {AppContext} from "../../components/context/AppContent.tsx";
 import XButton from "../../components/button/XButton.tsx";
 import XPagination from "../../components/pagination/XPagination.tsx";
 import {status} from '../../config/common.tsx'
+import XCard from "../../components/card/XCard.tsx";
 
 function List() {
 
@@ -68,40 +69,38 @@ function List() {
     };
 
     return (
-
-        <div>
-
-            <div className="columns">
-                <div className="column is-3">
-                    <div className="field">
-                        <label className="label">Name</label>
-                        <div className="control">
-                            <input className="input" type="text" placeholder="Text input"/>
-                        </div>
-                    </div>
-                </div>
-                <div className="column is-3">
-                    <div className="field">
-                        <label className="label">Name</label>
-                        <div className="control">
-                            <input className="input" type="text" placeholder="Text input"/>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+        <XCard>
 
             <div className="columns">
-
                 <div className="column">
-                    <div className="field">
-
-                        <XButton onClick={search} color="primary" text="搜索" />
-                    </div>
+                    <Link className="btn btn-success" to={'/admin/user/add'}>新增</Link>
+                    <XButton onClick={search} color="danger" text="删除" />
                 </div>
-
             </div>
 
+            <div className="columns">
+                <div className="column is-3">
+                    <div className="field">
+                        <label className="label">Name</label>
+                        <div className="control">
+                            <input className="input" type="text" placeholder="Text input"/>
+                        </div>
+                    </div>
+                </div>
+                <div className="column is-3">
+                    <div className="field">
+                        <label className="label">Name</label>
+                        <div className="control">
+                            <input className="input" type="text" placeholder="Text input"/>
+                        </div>
+                    </div>
+                </div>
+                <div className="column is-3">
+                    <div className="field field-search">
+                        <XButton type={"submit"} onClick={search} color="primary" text="搜索" />
+                    </div>
+                </div>
+            </div>
 
             <XPagination
                 pageCount={pageCount}
@@ -193,7 +192,8 @@ function List() {
             </table>
 
 
-        </div>
+
+        </XCard>
     );
 }
 
