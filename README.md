@@ -17,7 +17,7 @@ https://expressjs.com/
 https://nextjs.org/
 
 #docker
-docker run -itd --name nodejs -p 3000:3000 -v /home/jae/projects:/var/www --restart=yes node:18-alpine3.17
+docker run -itd --name nodejs -p 3000:3000 -v ${pwd}:/var/www --restart=always node:18-alpine3.17
 
 #ui example
 https://versions.bulma.io/0.4.4/documentation/elements/button/

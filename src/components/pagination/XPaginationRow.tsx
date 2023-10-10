@@ -9,7 +9,7 @@ export interface XPaginationRowProps {
     optionLabel?: string,
 }
 
-function XSelect({label, name, initValue, onChange, optionLabel}: XPaginationRowProps) {
+function XPaginationRow({label, name, initValue, onChange, optionLabel}: XPaginationRowProps) {
 
     const optionData = {
         '5 行': 5,
@@ -55,6 +55,7 @@ function XSelect({label, name, initValue, onChange, optionLabel}: XPaginationRow
             setIsDropdown(false)
             setSearchData(optionData);
             setSearchInp('');
+
         }
     };
 
@@ -103,7 +104,6 @@ function XSelect({label, name, initValue, onChange, optionLabel}: XPaginationRow
     };
 
     const handleOptionClick = (key) => {
-        console.log(key)
         if (optionData[key] == optionData[inpVal]) {
             return;
         }
@@ -189,4 +189,4 @@ function XSelect({label, name, initValue, onChange, optionLabel}: XPaginationRow
 }
 
 
-export default XSelect;
+export default XPaginationRow;

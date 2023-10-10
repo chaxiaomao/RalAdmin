@@ -1,24 +1,26 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Link, NavLink, Outlet} from "react-router-dom";
 
-import {httpGet, httpPost} from "../../request/http.tsx";
+import {httpGet, httpPost, httpRequest} from "../../request/http.tsx";
 import XCheckbox from "../../components/checkbox/XCheckbox.tsx";
 import {AppContext} from "../../components/context/AppContent.tsx";
 import XButton from "../../components/button/XButton.tsx";
 import XPagination from "../../components/pagination/XPagination.tsx";
 import {status} from '../../config/common.tsx'
 import XCard from "../../components/card/XCard.tsx";
+import XModal from "../../components/alert/XModal.tsx";
+import XLoading from "../../components/loading/XLoading.tsx";
+import XNotification from "../../components/alert/XNotificition.tsx";
 
 function List() {
 
     // let currentPage = 1;
     // let pageRows = 10;
 
-    const [userList, setUserList] = useState([]);
+    const [data, setData] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
     const [currentPageRows, setCurrentPageRows] = useState(10);
-
     const [checkedItems, setCheckedItems] = useState({});
     const [checkedItemsAll, setCheckedItemsAll] = useState(false);
 
@@ -32,23 +34,51 @@ function List() {
 
     const handleCheckboxChangeAll = () => {
         let items = {};
-        userList.map((item) => {
+        data.map((item) => {
             items[item.id] = !checkedItemsAll;
         })
         setCheckedItems(items);
         setCheckedItemsAll(!checkedItemsAll);
     };
 
-    function getUserList() {
-        console.log('currentPage:' + currentPage)
-        console.log('pageSize:' + currentPageRows)
+    function getData() {
+        // console.log('currentPage:' + currentPage)
+        // console.log('pageSize:' + currentPageRows)
+        XLoading.show()
 
-        httpGet('/admin/user/index', {page: currentPage, pageSize: currentPageRows}).then((data) => {
-            setUserList(data.data);
+        httpGet({
+            url: '/admin/user/index',
+            queryParams: {
+                page: currentPage,
+                pageSize: currentPageRows
+            }
+        }).then((data) => {
+            setData(data.data);
             setPageCount(data.meta.extraData.pageCount);
+            setCheckedItems({});
+            setCheckedItemsAll(false);
+            XLoading.hide();
         }).catch(err => {
 
         });
+    }
+
+    async function deleteId(id) {
+        await httpPost({url: '/admin/user/delete?id=' + id});
+        getData();
+    }
+
+    async function deleteIds(ids) {
+        if (ids != "") {
+            await httpPost({
+                url: '/admin/user/multiple-delete',
+                data: JSON.stringify({'ids': ids}),
+                // header: {
+                //     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                // },
+            });
+            getData();
+        }
     }
 
     const search = () => {
@@ -57,7 +87,7 @@ function List() {
 
     // 创建一个副作用函数，该函数会在组件挂载后执行
     useEffect(() => {
-        getUserList();
+        getData();
     }, [currentPage, currentPageRows]);
 
     const handlePage = (val) => {
@@ -68,15 +98,42 @@ function List() {
         setCurrentPageRows(val.page_rows)
     };
 
+    const handleDelete = (id) => {
+        XModal.show({
+            title: '提示',
+            content: '确认删除改记录',
+            onConfirm: () => {
+                deleteId(id)
+            }
+        })
+    }
+
+    const handleDeleteIds = () => {
+
+        let params = Object.keys(checkedItems)
+            .filter(key => checkedItems[key] == true)
+            // .map((key) => {
+            //     return encodeURIComponent('ids[]') + '=' + encodeURIComponent(key);
+            // })
+            .join(',');
+
+        if (params == "") {
+            XNotification.show({
+                color: 'warning',
+                title: '请选择删除项目'
+            })
+            return;
+        }
+
+        XModal.show({
+            onConfirm: () => {
+                deleteIds(params)
+            }
+        })
+    }
+
     return (
         <XCard>
-
-            <div className="columns">
-                <div className="column">
-                    <Link className="btn btn-success" to={'/admin/user/add'}>新增</Link>
-                    <XButton onClick={search} color="danger" text="删除" />
-                </div>
-            </div>
 
             <div className="columns">
                 <div className="column is-3">
@@ -97,8 +154,15 @@ function List() {
                 </div>
                 <div className="column is-3">
                     <div className="field field-search">
-                        <XButton type={"submit"} onClick={search} color="primary" text="搜索" />
+                        <XButton type={"submit"} onClick={search} color="primary" text="搜索"/>
                     </div>
+                </div>
+            </div>
+
+            <div className="columns">
+                <div className="column">
+                    <Link className="btn btn-success" to={'/admin/user/add'}>新增</Link>
+                    <XButton onClick={handleDeleteIds} color="danger" text="删除"/>
                 </div>
             </div>
 
@@ -155,7 +219,7 @@ function List() {
                 </tfoot>
                 <tbody>
                 {
-                    userList.map((item, id) => {
+                    data.map((item, id) => {
                         return (
                             <tr key={id}>
                                 <td>
@@ -166,13 +230,15 @@ function List() {
                                     />
                                 </td>
                                 <th>{item.id}</th>
-                                <td><Link to={'/admin/user/edit?id=' + item.id} title={item.username}>{item.username}</Link>
+                                <td><Link to={'/admin/user/edit?id=' + item.id}
+                                          title={item.username}>{item.username}</Link>
                                 </td>
                                 <td>{item.email}</td>
                                 <td>{status[item.status]}</td>
                                 <td>
 
-                                    <NavLink to={'/admin/user/edit?id=' + item.id} className="btn btn-success btn-icon btn-sm">
+                                    <NavLink to={'/admin/user/edit?id=' + item.id}
+                                             className="btn btn-success btn-icon btn-sm">
                                         <i className="fa fa-edit"></i>
                                     </NavLink>
 
@@ -180,6 +246,8 @@ function List() {
                                     <XButton
                                         color="danger"
                                         optionClass="btn-icon btn-sm"
+
+                                        onClick={() => handleDelete(item.id)}
                                     >
                                         <i className="fa fa-times"></i>
                                     </XButton>
@@ -190,7 +258,6 @@ function List() {
                 }
                 </tbody>
             </table>
-
 
 
         </XCard>

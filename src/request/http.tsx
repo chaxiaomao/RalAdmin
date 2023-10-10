@@ -1,12 +1,19 @@
 import {fakeAuthProvider} from "../router/auth.tsx";
 import {httpCode} from '../config/common.tsx'
-import XAlert from '../components/alert/XAlert.tsx'
 import XNotification from '../components/alert/XNotificition.tsx'
 const defaultHeaders = {'Content-Type': 'application/json'}
 
 // const baseUrl = 'http://be.gxservice.local';
 const baseUrl = 'http://localhost:21080';
 
+interface IHttpParams {
+    method?: string
+    url?: string
+    queryParams?: any
+    data?: any
+    header?: any
+    alert?: boolean
+}
 
 const getAuth = (header = {}) => {
 
@@ -30,7 +37,7 @@ async function alertAuth() {
 
 }
 
-export function httpGet(url, queryParams = {}, alert = false) {
+export function httpGet({url, queryParams = {}, alert = false} : IHttpParams) {
 
     // 将参数对象转换为查询字符串
     const queryString = Object.keys(queryParams)
@@ -50,9 +57,25 @@ export function httpGet(url, queryParams = {}, alert = false) {
     });
 }
 
-export function httpPost(url, data, alert = false, header = {}) {
+export function httpPost({url, data, alert = false, header = {}} : IHttpParams) {
+
     return fetch(baseUrl + url, {
         method: 'post',
+        headers: getAuth(header),
+        body: data
+    }).then(response => {
+
+        return handleResp(response);
+    }).catch(error => {
+
+        console.error('There was an error!', error);
+    });
+}
+
+export function httpRequest({method, url, data, alert = false, header = {}} : IHttpParams) {
+
+    return fetch(baseUrl + url, {
+        method: method,
         headers: getAuth(header),
         body: data
     }).then(response => {

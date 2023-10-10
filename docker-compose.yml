@@ -1,0 +1,12 @@
+version: '3'
+services:
+  rabel-admin:
+    #build:
+    #  context: .
+    image: node:18-alpine3.17
+    #container_name: rabel-admin
+    ports:
+      - "3000:3000"
+    volumes:
+      - ${pwd}:/app
+    restart: always

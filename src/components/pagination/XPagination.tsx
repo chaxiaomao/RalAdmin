@@ -1,7 +1,6 @@
 import '../select/index.scss'
 import './index.scss'
 import React, {useRef, useState} from "react";
-import {inflate} from "zlib";
 import XPaginationRow from "./XPaginationRow.tsx";
 
 export interface XPaginationProps {
@@ -120,11 +119,11 @@ function XPagination({label, name, currentPage, pageCount, onPageRowChange, onPa
 
     const handlePage = (op) => {
         let currentCount = optionData[inpVal];
-        let nextCount = currentCount + op;
-        if (1 <= nextCount && nextCount <= pageCount) {
-            setInpVal(pagePreText + nextCount)
+        currentCount += op;
+        if (1 <= currentCount && currentCount <= pageCount) {
+            setInpVal(pagePreText + currentCount)
             if (onPageChange) {
-                onPageChange({'page' : nextCount})
+                onPageChange({'page' : currentCount})
             }
         }
     }

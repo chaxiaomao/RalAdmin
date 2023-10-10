@@ -49,12 +49,15 @@ function LoginPage() {
         // let data = await login(formData.username, formData.password);
         // let data = await login(formData.username, formData.password);
 
-        let res = await httpPost('/admin/user/login', JSON.stringify({
-            LoginForm: {
-                username: formData.username,
-                password: formData.password,
-            }
-        })).then(async res => {
+        let res = await httpPost({
+            url: '/admin/user/login',
+            data: JSON.stringify({
+                LoginForm: {
+                    username: formData.username,
+                    password: formData.password,
+                }
+            })
+        }).then(async res => {
             if (res.meta.code != httpCode.SUCCESS) {
                 setErrors(res.data);
                 setLoggingIn(false);

@@ -1,7 +1,69 @@
 .xalert-warp {
   position: absolute;
-  top: 5%;
+  top: 30px;
   left: 50%;
   //transform: translateY(-50%);
   transform: translateX(-50%);
+}
+
+.notification {
+  border-radius: 8px;
+}
+
+.notification.is-danger {
+  background: #ef8157;
+}
+
+.notification.is-warning {
+  background: #fbc658;
+}
+
+.notification.is-primary {
+  background: #00d1b2;
+}
+
+.notification.is-success {
+  background: #6bd098;
+}
+
+
+/// modal
+.modal.is-active {
+  display: block;
+}
+
+.modal .modal-card, .notification {
+  --animate-duration: 600ms;
+  --animate-delay: 0.3s;
+}
+
+.fade {
+  transition: opacity .15s linear
+}
+
+@media(prefers-reduced-motion: reduce) {
+  .fade {
+    transition: none
+  }
+}
+
+.fade:not(.show) {
+  opacity: 0
+}
+
+.modal-background.show {
+  opacity: .3 !important;
+}
+
+
+.modal-background.fade {
+  opacity: 0;
+}
+
+.modal-background {
+  background-color: rgba(10,10,10);
+}
+
+.modal-card {
+  margin-top: 30px;
 }

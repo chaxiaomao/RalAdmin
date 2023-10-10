@@ -1,6 +1,5 @@
 import React from "react";
 import './index.scss'
-import ReactDOM from "react-dom";
 import {createRoot} from "react-dom/client";
 
 const show = function (props: Omit<IModalProps, "visible">) {
@@ -39,6 +38,7 @@ const show = function (props: Omit<IModalProps, "visible">) {
 interface IModalProps {
     visible?: boolean
     title: string
+    color?: string
     onClose?: () => void
 }
 
@@ -73,8 +73,6 @@ class XNotification extends React.Component<IModalProps, IModalState> {
                 clearTimeout(this.timeoutClose)
                 this.timeoutClose = null;
             }, 600)
-
-            console.log(this.timeoutClose)
 
         }, 5000);
         // this.props.onClose && this.props.onClose()
@@ -114,7 +112,21 @@ class XNotification extends React.Component<IModalProps, IModalState> {
     }
 
     render() {
-        let css = this.state.visible ? 'notification is-danger animate__animated animate__fadeInDown' : 'notification is-danger animate__animated animate__fadeOutUp';
+        let css = this.state.visible ? 'notification animate__animated animate__fadeInDown' : 'notification animate__animated animate__fadeOutUp';
+        switch (this.props.color) {
+            case 'success':
+                css += ' is-success';
+                break;
+            case 'warning':
+                css += ' is-warning';
+                break;
+            case 'danger':
+                css += ' is-danger';
+                break;
+            default:
+                css += ' is-primary';
+                break;
+        }
         return (
             <div className="xalert-warp">
                 <div className={css}>
