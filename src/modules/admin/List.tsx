@@ -100,8 +100,8 @@ function List() {
 
     const handleDelete = (id) => {
         XModal.show({
-            title: '提示',
-            content: '确认删除改记录',
+            // title: '提示',
+            // content: '确认删除此条记录',
             onConfirm: () => {
                 deleteId(id)
             }

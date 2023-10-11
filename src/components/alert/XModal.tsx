@@ -121,11 +121,11 @@ class XModal extends React.Component<IModalProps, IModalState> {
                 <div onClick={this.handleHide} className={this.state.visible ? 'modal-background fade show' : 'modal-background fade'}></div>
                 <div className={this.state.visible ? "modal-card animate__animated animate__fadeInDown" : "modal-card animate__animated animate__fadeOutUp"}>
                     <header className="modal-card-head">
-                        <p className="modal-card-title">{this.props.title ? this.props.title : '提示'}</p>
+                        <p className="modal-card-title">{this.props.title ? this.props.title : '操作确认'}</p>
                         <button className="delete" onClick={this.handleHide}></button>
                     </header>
                     <section className="modal-card-body">
-                        {this.props.content ? this.props.content : '确认执行改操作?'}
+                        {this.props.content ? this.props.content : '确认执行改操作吗?'}
                     </section>
                     <footer className="modal-card-foot">
                         <XButton

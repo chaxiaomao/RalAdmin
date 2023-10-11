@@ -21,10 +21,7 @@ function LoginPage() {
         username: '',
         password: '',
     })
-    const [errors, setErrors] = useState({
-        username: '',
-        password: '',
-    })
+    const [errors, setErrors] = useState({})
     const [isLoggingIn, setLoggingIn] = useState(false);
 
 
@@ -37,8 +34,13 @@ function LoginPage() {
 
 
         // 执行你想要的操作，如表单验证、数据处理等
-        if (formData.username === '' || formData.password === '') {
-            alert('Please fill in all fields.');
+        if (formData.username === '') {
+            setErrors({username: '请填入用户名'})
+            return ;
+        }
+
+        if (formData.password === '') {
+            setErrors({password: '请填入密码'})
             return ;
         }
 
@@ -52,28 +54,17 @@ function LoginPage() {
         let res = await httpPost({
             url: '/admin/user/login',
             data: JSON.stringify({
-                LoginForm: {
-                    username: formData.username,
-                    password: formData.password,
-                }
+                LoginForm: formData
             })
         }).then(async res => {
-            if (res.meta.code != httpCode.SUCCESS) {
-                setErrors(res.data);
-                setLoggingIn(false);
+            if (res.meta.code == httpCode.SUCCESS) {
+                setErrors({});
+                await fakeAuthProvider.signin(res.data);
+                window.location.replace(from);
                 return;
             }
-
-            // window.location.replace(from);
-            // if (res.data.hasOwnProperty('access_token')) {
-            //
-            // }
-
-            await fakeAuthProvider.signin(res.data);
-
+            setErrors(res.data);
             setLoggingIn(false);
-
-            window.location.replace(from);
 
         }).catch(err => {
             setLoggingIn(false);

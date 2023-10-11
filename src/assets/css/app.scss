@@ -55,6 +55,20 @@ body {
 }
 
 ///  cover
+.column {
+  padding: .6rem;
+}
+
+.tabs a {
+  color: #4a4a4a;
+  //color: #363636;
+  transition: color 386ms ease-out;
+}
+
+.tabs a:hover {
+  color: #00d1b2;
+  border-bottom-color: #00d1b2;
+}
 
 /// LOGIN
 #login {
@@ -94,4 +108,19 @@ body {
   bottom: 0;
 }
 
+/// form
+.from-300 {
+  width: 300px;
+  padding-top: 20px;
+  padding-bottom: 60px;
+}
+
+.column-center {
+  margin: 0 auto;
+}
+
+.form-label {
+  margin-top: 8px;
+  text-align: right;
+}
 

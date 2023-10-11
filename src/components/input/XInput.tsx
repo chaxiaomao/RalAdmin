@@ -17,10 +17,19 @@ function XInput({ label, name, value, placeholder, type, onChange, icon, errors}
                 />
                 {icon ? <span className="icon is-small is-left"><i className={icon}></i></span> : ''}
             </div>
-            {errors ? <p className="help is-danger"> {errors} </p> : ''}
+            {errors ? <p className="help is-danger"> {getMsg(errors)} </p> : ''}
 
         </div>
     );
+}
+
+function getMsg(err) {
+    // 判断是否是数组
+    if (Array.isArray(err)) {
+        return err[0]
+    } else {
+        return err
+    }
 }
 
 export interface XInputProps {

@@ -137,7 +137,8 @@ function XPagination({label, name, currentPage, pageCount, onPageRowChange, onPa
                 {/*<a className="pagination-previous" onClick={() => handlePage(-1)}>上一页</a>*/}
 
                 <button className={optionData[inpVal] == 1 ? "btn btn-primary disabled" : "btn btn-primary"} onClick={() => handlePage(-1)}>
-                    <span className="icon is-small"><i className="fa fa-arrow-left"></i></span>
+                    <span className="icon is-small"><i className="fa fa-angle-left"></i></span>
+                    {/*<span className="icon is-small"><i className="fa fa-arrow-left"></i></span>*/}
                     <span>上一页</span>
                 </button>
             </div>
@@ -219,7 +220,8 @@ function XPagination({label, name, currentPage, pageCount, onPageRowChange, onPa
             <div className="column">
                 <button className={optionData[inpVal] == pageCount ? "btn btn-primary pagination-right disabled" : "btn btn-primary pagination-right"} onClick={() => handlePage(1)}>
                     <span>下一页 </span>
-                    <span className="icon is-small"><i className="fa fa-arrow-right"></i></span>
+                    <span className="icon is-small"><i className="fa fa-angle-right"></i></span>
+                    {/*<span className="icon is-small"><i className="fa fa-arrow-right"></i></span>*/}
                 </button>
                 {/*<a className="pagination-next pagination-right" onClick={() => handlePage(1)}>下一页</a>*/}
 

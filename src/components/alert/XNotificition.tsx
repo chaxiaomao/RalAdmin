@@ -120,11 +120,11 @@ class XNotification extends React.Component<IModalProps, IModalState> {
             case 'warning':
                 css += ' is-warning';
                 break;
-            case 'danger':
-                css += ' is-danger';
+            case 'primary':
+                css += ' is-primary';
                 break;
             default:
-                css += ' is-primary';
+                css += ' is-danger';
                 break;
         }
         return (

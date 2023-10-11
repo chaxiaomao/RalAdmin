@@ -51,7 +51,7 @@ export function httpGet({url, queryParams = {}, alert = false} : IHttpParams) {
         headers: getAuth()
     }).then(response => {
 
-        return handleResp(response);
+        return handleResp(response, alert);
     }).catch(error => {
         console.error('There was an error!', error);
     });
@@ -65,7 +65,7 @@ export function httpPost({url, data, alert = false, header = {}} : IHttpParams) 
         body: data
     }).then(response => {
 
-        return handleResp(response);
+        return handleResp(response, alert);
     }).catch(error => {
 
         console.error('There was an error!', error);
@@ -80,14 +80,16 @@ export function httpRequest({method, url, data, alert = false, header = {}} : IH
         body: data
     }).then(response => {
 
-        return handleResp(response);
+        return handleResp(response, alert);
     }).catch(error => {
 
         console.error('There was an error!', error);
     });
 }
 
-async function handleResp(response) {
+async function handleResp(response, alert = false) {
+
+    /// handle fail
     if (!response.ok) {
         // get error message from body or default to response statusText
         const error =  response.statusText;
@@ -106,8 +108,11 @@ async function handleResp(response) {
 
     if (res.meta.code != httpCode.SUCCESS && alert) {
         // XAlert.show({title: 'xxx'});
+        XNotification.show({title: res.meta.msg != '' ?  res.meta.msg : '操作失败'})
+    }
 
-        XNotification.show({title: res.meta.msg != '' ?  res.meta.msg : '请求操作失败'})
+    if (res.meta.code == httpCode.SUCCESS && alert) {
+        XNotification.show({title: res.meta.msg != '' ?  res.meta.msg : '操作成功', color: 'success'})
     }
 
     return res;
