@@ -3,8 +3,8 @@ import {httpCode} from '../config/common.tsx'
 import XNotification from '../components/alert/XNotificition.tsx'
 const defaultHeaders = {'Content-Type': 'application/json'}
 
-// const baseUrl = 'http://be.gxservice.local';
-const baseUrl = 'http://localhost:21080';
+const baseUrl = 'http://be.gxservice.local';
+// const baseUrl = 'http://localhost:21080';
 
 interface IHttpParams {
     method?: string

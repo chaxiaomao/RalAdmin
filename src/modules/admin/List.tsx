@@ -190,7 +190,7 @@ function List() {
                     </th>
                     <th>
                         <div className="field">
-                            <label className="label">名字</label>
+                            <label className="label">用户名</label>
                         </div>
                     </th>
                     <th>

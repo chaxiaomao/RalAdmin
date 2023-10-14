@@ -1,58 +1,93 @@
 import React, {useEffect, useState} from 'react';
 import XInput from "../../components/input/XInput.tsx";
-import XCheckbox from "../../components/checkbox/XCheckbox.tsx";
 import XSelect from "../../components/select/XSelect.tsx";
-import XMultipleSelect from "../../components/select/XMultipleSelect.tsx";
-import XCalendar from "../../components/calendar/XCalendar.tsx";
-import {useParams} from "react-router-dom";
-import XPagination from "../../components/pagination/XPagination.tsx";
+import {httpGet, httpPost} from "../../request/http.tsx";
+import {httpCode} from "../../config/common.tsx";
+import XCard from "../../components/card/XCard.tsx";
+import {Link} from "react-router-dom";
 
 function Edit() {
 
-    // const [username, setUsername] = useState('');
-    // const [password, setPassword] = useState('');
+    const [isSubmitting, setSubmitting] = useState(false);
+    const [errors, setErrors] = useState({})
 
-    // const statusOptions = {'活动': 1, '停用': 2};
     const statusOptions = {
         '活动': 1,
         '停用': 2,
     };
-    const statusOptions2 = {
-        'Paris': 1,
-        'Bucharest': 2,
-        'Piatra  Neamt': 3,
-        'New York': 4,
-        'India': 5,
-        'Rome': 6,
-    };
 
     const [formData, setFormData] = useState({
+        id: '',
         username: '',
+        email: '',
         password: '',
         status: '',
     })
-    const [errors, setErrors] = useState({
-        username: '',
-        password: '',
-    })
-    const [isLoggingIn, setLoggingIn] = useState(false);
 
     useEffect(() => {
 
         let params = new URLSearchParams(location.search);
         let id = params.get("id");
-        console.log(id)
+
+        if (id) {
+            httpGet({
+                url: '/admin/user/edit',
+                queryParams: {id: id}
+            }).then(async res => {
+                if (res.meta.code == httpCode.SUCCESS) {
+                    setData(res.data)
+                }
+            })
+        }
+
     }, [])
 
+    function setData(data) {
 
-    const handleSubmit = async (event) => {
+        setFormData({
+            id: data.id,
+            username: data.username,
+            email: data.email,
+            password: '',
+            status: data.status,
+        })
+    }
+
+    const handleSubmit = (event) => {
         event.preventDefault(); // 阻止表单的默认提交行为
 
-        // 执行你想要的操作，如表单验证、数据处理等
-        // var username = document.querySelector('input[name="username"]').value;
-        // var password = document.querySelector('input[name="password"]').value;
 
-        console.log(formData)
+        // 执行你想要的操作，如表单验证、数据处理等
+        if (formData.username === '') {
+            setErrors({username: '请填入用户名'})
+            return ;
+        }
+
+        if (formData.id == '' && formData.password === '') {
+            setErrors({password: '请填入密码'})
+            return ;
+        }
+
+        setSubmitting(true);
+
+        httpPost({
+            url: '/admin/user/edit?id=' + formData.id,
+            alert: true,
+            data: JSON.stringify({
+                BeUser: formData
+            })
+        }).then(async res => {
+            if (res.meta.code == httpCode.SUCCESS) {
+                setData(res.data)
+                setErrors({});
+            } else {
+                setErrors(res.data);
+            }
+            setSubmitting(false);
+
+        }).catch(err => {
+            setSubmitting(false);
+        })
 
     };
 
@@ -64,87 +99,101 @@ function Edit() {
         }));
     };
 
-    const handleFormChange1 = (val) => {
-
-        console.log(val)
+    const handleStatusChange = (item) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            status: item.sval,
+        }));
     };
-
-
 
     return (
 
-        <div className="">
+        <XCard>
 
-            <XPagination
-                pageCount={10}
-                onPageChange={handleFormChange1}
-            />
+            <div className="tabs">
+                <ul>
+                    <li>
+                        <Link to={'..'}>
+                            <span className="icon"><i className="fa fa-angle-left"></i></span>
+                            <span>返回</span>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
 
-            <XCalendar
-                icon="fa fa-calendar"
-                placeholder="日期"
-            />
-            <XSelect
-                label="Status"
-                initValue={1}
-                value={formData.status}
-                onChange={handleFormChange1}
-                optionData={statusOptions}
-            />
-            <XMultipleSelect
-                label="City"
-                optionData={statusOptions2}
-                onChange={handleFormChange1}
-                initValue={{
-                    'Paris': 1,
-                    'Bucharest': 2,
-                }}
-            />
-            <br/>
-            <form action="" onSubmit={handleSubmit}>
+            <form className="form-300" action="" onSubmit={handleSubmit}>
                 <div className="columns">
+                    <div className="column is-3">
+                        <label className="form-label">用户名</label>
+                    </div>
                     <div className="column">
                         <XInput
                             type="text"
                             name="username"
                             value={formData.username}
-                            placeholder="username"
                             onChange={handleFormChange}
                             errors={errors.username}
                         />
                     </div>
                 </div>
                 <div className="columns">
+                    <div className="column is-3">
+                        <label className="form-label">邮箱</label>
+                    </div>
                     <div className="column">
-                        {/*<label htmlFor="nombre" className="label"></label>*/}
+                        <XInput
+                            type="text"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleFormChange}
+                            errors={errors.email}
+                        />
+                    </div>
+                </div>
+                <div className="columns">
+                    <div className="column is-3">
+                        <label className="form-label">密码</label>
+                    </div>
+                    <div className="column">
                         <XInput
                             type="password"
                             name="password"
                             value={formData.password}
-                            placeholder="password"
                             onChange={handleFormChange}
                             errors={errors.password}
                         />
                     </div>
                 </div>
                 <div className="columns">
+                    <div className="column is-3">
+                        <label className="form-label">状态</label>
+                    </div>
                     <div className="column">
-                        {/*<label htmlFor="acceso" className="label">Días de acceso: </label>*/}
                         <div className="control">
 
-                            <XCheckbox
-                                label="Remember me"
+                            <XSelect
+                                initValue={formData.status}
+                                // value={formData.status}
+                                onChange={handleStatusChange}
+                                optionData={statusOptions}
                             />
                         </div>
                     </div>
                 </div>
-                <button type="submit" className={isLoggingIn ? 'button is-primary is-loading' : 'button is-primary'}
-                        id="login">
-                    <span className="icon"><i className="fa fa-save"></i></span>
-                    <span>Login</span>
-                </button>
+
+                <div className="columns">
+                    <div className="column is-3">
+                    </div>
+                    <div className="column">
+                        <button type="submit" className={isSubmitting ? 'button is-primary is-loading' : 'button is-primary'} >
+                            <span className="icon"><i className="fa fa-save"></i></span>
+                            <span>保存</span>
+                        </button>
+                    </div>
+                </div>
+
             </form>
-        </div>
+        </XCard>
 
     )
 }

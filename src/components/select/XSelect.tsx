@@ -37,7 +37,7 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
         return () => {
             document.removeEventListener('click', handleFocusClick);
         };
-    }, []);
+    }, [initValue]);
 
     const handleFocusClick = (event) => {
         // 检查点击的目标元素是否是容器区域内的子元素
@@ -100,7 +100,7 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
         }
         // todo return key or value
         if (onChange) {
-            onChange({'selected_id' : optionData[key]})
+            onChange({'sval' : optionData[key]})
         }
         setIsDropdown(false)
         setSearchInp('');
