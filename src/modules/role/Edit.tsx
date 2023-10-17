@@ -1,28 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import XInput from "../../components/input/XInput.tsx";
-import XSelect from "../../components/select/XSelect.tsx";
 import {httpGet, httpPost} from "../../request/http.tsx";
 import {httpCode} from "../../config/common.tsx";
 import XCard from "../../components/card/XCard.tsx";
 import {Link, useNavigate} from "react-router-dom";
+import XTextarea from "../../components/input/XTextarea.tsx";
 
 function Edit() {
 
     const navigate = useNavigate();
+
     const [isSubmitting, setSubmitting] = useState(false);
     const [errors, setErrors] = useState({})
-
-    const statusOptions = {
-        '活动': 1,
-        '停用': 2,
-    };
+    const [itemName, setItemName] = useState("")
 
     const [formData, setFormData] = useState({
-        id: '',
-        username: '',
-        email: '',
-        password: '',
-        status: '',
+        name: '',
+        type: '',
+        description: '',
+        rule_name: '',
+        data: '',
     })
 
     useEffect(() => {
@@ -32,7 +29,7 @@ function Edit() {
 
         if (id) {
             httpGet({
-                url: '/admin/user/edit',
+                url: '/admin/role/edit',
                 queryParams: {id: id}
             }).then(async res => {
                 if (res.meta.code == httpCode.SUCCESS) {
@@ -46,13 +43,13 @@ function Edit() {
     }, [])
 
     function setData(data) {
-
+        setItemName(data.name)
         setFormData({
-            id: data.id,
-            username: data.username,
-            email: data.email,
-            password: '',
-            status: data.status,
+            name: data.name,
+            type: data.type,
+            description: data.description ? data.description : '',
+            rule_name: data.rule_name ? data.rule_name : '',
+            data: data.data ? data.data : '',
         })
     }
 
@@ -61,23 +58,18 @@ function Edit() {
 
 
         // 执行你想要的操作，如表单验证、数据处理等
-        if (formData.username === '') {
-            setErrors({username: '请填入用户名'})
-            return ;
-        }
-
-        if (formData.id == '' && formData.password === '') {
-            setErrors({password: '请填入密码'})
+        if (formData.name === '') {
+            setErrors({name: '请填入名称'})
             return ;
         }
 
         setSubmitting(true);
 
         httpPost({
-            url: '/admin/user/edit?id=' + formData.id,
+            url: '/admin/role/edit?id=' + itemName,
             alert: true,
             data: JSON.stringify({
-                BeUser: formData
+                Role: formData
             })
         }).then(async res => {
             if (res.meta.code == httpCode.SUCCESS) {
@@ -102,12 +94,6 @@ function Edit() {
         }));
     };
 
-    const handleStatusChange = (item) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            status: item.value,
-        }));
-    };
 
     return (
 
@@ -124,69 +110,57 @@ function Edit() {
                 </ul>
             </div>
 
-            <form className="form-300" action="" onSubmit={handleSubmit}>
+            <form className="" action="" onSubmit={handleSubmit}>
                 <div className="columns">
-                    <div className="column is-3">
-                        <label className="form-label">用户名</label>
-                    </div>
                     <div className="column">
+                        <label>名字</label>
                         <XInput
                             type="text"
-                            name="username"
-                            value={formData.username}
+                            name="name"
+                            value={formData.name}
                             onChange={handleFormChange}
-                            errors={errors.username}
+                            errors={errors.name}
                         />
                     </div>
-                </div>
-                <div className="columns">
-                    <div className="column is-3">
-                        <label className="form-label">邮箱</label>
-                    </div>
-                    <div className="column">
-                        <XInput
-                            type="text"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleFormChange}
-                            errors={errors.email}
-                        />
-                    </div>
-                </div>
-                <div className="columns">
-                    <div className="column is-3">
-                        <label className="form-label">密码</label>
-                    </div>
-                    <div className="column">
-                        <XInput
-                            type="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleFormChange}
-                            errors={errors.password}
-                        />
-                    </div>
-                </div>
-                <div className="columns">
-                    <div className="column is-3">
-                        <label className="form-label">状态</label>
-                    </div>
-                    <div className="column">
-                        <div className="control">
 
-                            <XSelect
-                                initValue={formData.status}
-                                // value={formData.status}
-                                onChange={handleStatusChange}
-                                optionData={statusOptions}
-                            />
-                        </div>
+                    <div className="column">
+                        <label>描述</label>
+                        <XInput
+                            type="text"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleFormChange}
+                            errors={errors.description}
+                        />
+                    </div>
+
+                    <div className="column">
+                        <label>规则名字</label>
+                        <XInput
+                            type="text"
+                            name="rule_name"
+                            value={formData.rule_name}
+                            onChange={handleFormChange}
+                            errors={errors.rule_name}
+                        />
+                    </div>
+
+                </div>
+
+                <div className="columns">
+                    <div className="column is-one-third-tablet">
+                        <label>数据</label>
+                        <XTextarea
+                            type="textarea"
+                            name="data"
+                            value={formData.data}
+                            onChange={handleFormChange}
+                            errors={errors.data}
+                        />
                     </div>
                 </div>
 
                 <div className="columns">
-                    <div className="column is-3">
-                    </div>
                     <div className="column">
                         <button type="submit" className={isSubmitting ? 'button is-primary is-loading' : 'button is-primary'} >
                             <span className="icon"><i className="fa fa-save"></i></span>

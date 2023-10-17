@@ -11,6 +11,7 @@ import XCard from "../../components/card/XCard.tsx";
 import XModal from "../../components/alert/XModal.tsx";
 import XLoading from "../../components/loading/XLoading.tsx";
 import XNotification from "../../components/alert/XNotificition.tsx";
+import {Tooltip} from "react-tooltip";
 
 function List() {
 
@@ -28,14 +29,14 @@ function List() {
     const handleCheckboxChange = (item) => {
         setCheckedItems({
             ...checkedItems,
-            [item.id]: !checkedItems[item.id],
+            [item.name]: !checkedItems[item.name],
         });
     };
 
     const handleCheckboxChangeAll = () => {
         let items = {};
         data.map((item) => {
-            items[item.id] = !checkedItemsAll;
+            items[item.name] = !checkedItemsAll;
         })
         setCheckedItems(items);
         setCheckedItemsAll(!checkedItemsAll);
@@ -47,7 +48,7 @@ function List() {
         XLoading.show()
 
         httpGet({
-            url: '/admin/user/index',
+            url: '/admin/role/index',
             queryParams: {
                 page: currentPage,
                 pageSize: currentPageRows
@@ -64,14 +65,14 @@ function List() {
     }
 
     async function deleteId(id) {
-        await httpPost({url: '/admin/user/delete?id=' + id});
+        await httpPost({url: '/admin/role/delete?id=' + id});
         getData();
     }
 
     async function deleteIds(ids) {
         if (ids != "") {
             await httpPost({
-                url: '/admin/user/multiple-delete',
+                url: '/admin/role/multiple-delete',
                 data: JSON.stringify({'ids': ids}),
                 // header: {
                 //     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -161,7 +162,7 @@ function List() {
 
             <div className="columns">
                 <div className="column">
-                    <Link className="btn btn-success" to={'/admin/user/add'}>新增</Link>
+                    <Link className="btn btn-success" to={'/admin/role/add'}>新增</Link>
                     <XButton onClick={handleDeleteIds} color="danger" text="删除"/>
                     <XButton onClick={getData} color="secondary" text="刷新"/>
                 </div>
@@ -186,23 +187,28 @@ function List() {
                     </th>
                     <th>
                         <div className="field">
-                            <label className="label">ID</label>
-                        </div>
-                    </th>
-                    <th>
-                        <div className="field">
-                            <label className="label">用户名</label>
+                            <label className="label">名字</label>
                         </div>
                     </th>
                     <th>
 
                         <div className="field">
-                            <label className="label">邮箱</label>
+                            <label className="label">类型</label>
                         </div>
                     </th>
                     <th>
                         <div className="field">
-                            <label className="label">状态</label>
+                            <label className="label">描述</label>
+                        </div>
+                    </th>
+                    <th>
+                        <div className="field">
+                            <label className="label">规则名字</label>
+                        </div>
+                    </th>
+                    <th>
+                        <div className="field">
+                            <label className="label">数据</label>
                         </div>
                     </th>
                     <th>动作</th>
@@ -218,6 +224,7 @@ function List() {
                 {/*    <th>动作</th>*/}
                 {/*</tr>*/}
                 {/*</tfoot>*/}
+
                 <tbody>
                 {
                     data.map((item, id) => {
@@ -226,29 +233,34 @@ function List() {
                                 <td>
                                     <XCheckbox
                                         // value={item.id}
-                                        checked={checkedItems[item.id] || false}
+                                        checked={checkedItems[item.name] || false}
                                         onChange={() => handleCheckboxChange(item)}
                                     />
                                 </td>
-                                <th>{item.id}</th>
-                                <td><Link to={'/admin/user/edit?id=' + item.id}
-                                          title={item.username}>{item.username}</Link>
-                                </td>
-                                <td>{item.email}</td>
-                                <td>{status[item.status]}</td>
+                                <td>{item.name}</td>
+                                <td>{item.type}</td>
+                                <td>{item.description}</td>
+                                <td>{item.rule_name}</td>
+                                <td>{item.data}</td>
                                 <td>
 
-                                    <NavLink to={'/admin/user/edit?id=' + item.id}
-                                             className="btn btn-success btn-icon btn-sm">
+                                    <NavLink
+                                        to={'/admin/permission/edit?id=' + item.name}
+                                        className="btn btn-success btn-icon btn-sm item-edit">
                                         <i className="fa fa-edit"></i>
+                                    </NavLink>
+
+                                    <NavLink
+                                        to={'/admin/role/assigment?id=' + item.name}
+                                             className="btn btn-success btn-icon btn-sm item-assigment">
+                                        <i className="fa fa-tree"></i>
                                     </NavLink>
 
 
                                     <XButton
                                         color="danger"
-                                        optionClass="btn-icon btn-sm"
-
-                                        onClick={() => handleDelete(item.id)}
+                                        optionClass="btn-icon btn-sm item-delete"
+                                        onClick={() => handleDelete(item.name)}
                                     >
                                         <i className="fa fa-times"></i>
                                     </XButton>
@@ -258,6 +270,7 @@ function List() {
                     })
                 }
                 </tbody>
+
             </table>
 
             <XPagination
@@ -267,7 +280,9 @@ function List() {
                 onPageRowChange={handlePageRow}
             />
 
-
+            <Tooltip anchorSelect=".item-edit" place="top" className="tooltip-a">编辑</Tooltip>
+            <Tooltip anchorSelect=".item-assigment" place="top" className="tooltip-a">分配</Tooltip>
+            <Tooltip anchorSelect=".item-delete" place="top" className="tooltip-a">删除</Tooltip>
         </XCard>
     );
 }

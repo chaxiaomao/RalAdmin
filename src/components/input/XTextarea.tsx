@@ -1,14 +1,14 @@
 import './index.scss'
 import React from "react";
 
-function XInput({ label, name, value, placeholder, type, onChange, icon, errors, css} : XInputProps) {
+function XTextarea({ label, name, value, placeholder, type, onChange, icon, errors, css} : XInputProps) {
     return (
         <div className="field">
             {label ? <label className="label">{label}</label> : ''}
             <div className={icon ? "control has-icons-left" : "control"}>
-                <input
+                <textarea
                     type={type}
-                    className={css ? "input " + css : "input"}
+                    className={css ? "textarea " + css : "textarea"}
                     name={name}
                     value={value}
                     placeholder={placeholder}
@@ -45,4 +45,4 @@ export interface XInputProps {
     css?: String,
 }
 
-export default XInput;
+export default XTextarea;

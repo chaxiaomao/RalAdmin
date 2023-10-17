@@ -26,7 +26,7 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
         return () => {
             document.removeEventListener('click', handleFocusClick);
         };
-    }, []);
+    }, [initValue]);
 
     const handleFocusClick = (event) => {
         // 检查点击的目标元素是否是容器区域内的子元素

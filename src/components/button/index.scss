@@ -45,7 +45,7 @@
 }
 
 .btn-secondary.focus, .btn-secondary:focus {
-  box-shadow: 0 0 0 .2rem rgba(130, 138, 145, .5)
+  //box-shadow: 0 0 0 .2rem rgba(130, 138, 145, .5)
 }
 
 .btn-secondary.disabled, .btn-secondary:disabled {
@@ -61,7 +61,7 @@
 }
 
 .btn-secondary:not(:disabled):not(.disabled).active:focus, .btn-secondary:not(:disabled):not(.disabled):active:focus, .show > .btn-secondary.dropdown-toggle:focus {
-  box-shadow: 0 0 0 .2rem rgba(130, 138, 145, .5)
+  //box-shadow: 0 0 0 .2rem rgba(130, 138, 145, .5)
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -71,13 +71,13 @@
 }
 
 .btn:hover {
-  color: #212529;
+  //color: #212529;
   text-decoration: none
 }
 
 .btn.focus, .btn:focus {
   outline: 0;
-  box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25)
+  //box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25)
 }
 
 .btn.disabled, .btn:disabled {

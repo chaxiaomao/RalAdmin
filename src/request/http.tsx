@@ -1,7 +1,11 @@
 import {fakeAuthProvider} from "../router/auth.tsx";
 import {httpCode} from '../config/common.tsx'
 import XNotification from '../components/alert/XNotificition.tsx'
-const defaultHeaders = {'Content-Type': 'application/json'}
+
+const defaultHeaders = {
+    'Content-Type': 'application/json',
+    'cache-control': 'private, max-age=0',
+}
 
 const baseUrl = 'http://be.gxservice.local';
 // const baseUrl = 'http://localhost:21080';
@@ -16,8 +20,7 @@ interface IHttpParams {
 }
 
 const getAuth = (header = {}) => {
-
-    let headers = Object.assign({}, {'Content-Type': 'application/json'}, header);
+    let headers = Object.assign({}, defaultHeaders, header);
     let user = fakeAuthProvider.user;
     if (user) {
         headers['Authorization'] = 'Bearer ' + user.access_token;

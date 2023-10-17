@@ -8,9 +8,10 @@ export interface XSelectProps {
     optionData: {} | { any: any },
     onChange?: Function,
     optionLabel?: string,
+    customerAble?: boolean,
 }
 
-function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XSelectProps) {
+function XSelect({label, name, initValue, optionData, onChange, optionLabel, customerAble = false}: XSelectProps) {
 
     const containerRef = useRef(null);
     const inputRef = useRef(null);
@@ -46,7 +47,10 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
             setIsFocusInput(false)
             setIsDropdown(false)
             setSearchData(optionData);
-            setSearchInp('');
+
+            if (!customerAble) {
+                setSearchInp('');
+            }
         }
     };
 
@@ -54,7 +58,10 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
         setIsDropdown(!isDropdown)
         setIsFocusInput(true)
         setSearchData(optionData);
-        setSearchInp('')
+
+        if (!customerAble) {
+            setSearchInp('')
+        }
 
         if (inputRef.current) {
             inputRef.current.focus();
@@ -100,7 +107,10 @@ function XSelect({label, name, initValue, optionData, onChange, optionLabel}: XS
         }
         // todo return key or value
         if (onChange) {
-            onChange({'sval' : optionData[key]})
+            onChange({
+                'key': key,
+                'value' : optionData[key]
+            })
         }
         setIsDropdown(false)
         setSearchInp('');
