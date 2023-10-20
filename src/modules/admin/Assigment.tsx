@@ -223,17 +223,17 @@ class Assigment extends React.Component<IModalProps, any> {
                                 />
                             </div>
 
-                            <div className="field">
-                                <label>权限</label>
-                                <XMultipleSelect
-                                    initValue={this.state.assignmentPermissions}
-                                    // value={formData.status}
-                                    onChange={this.handlePermissionChange}
-                                    optionData={this.state.optionsPermissions}
-                                />
-                            </div>
+                            {/*<div className="field">*/}
+                            {/*    <label>权限</label>*/}
+                            {/*    <XMultipleSelect*/}
+                            {/*        initValue={this.state.assignmentPermissions}*/}
+                            {/*        // value={formData.status}*/}
+                            {/*        onChange={this.handlePermissionChange}*/}
+                            {/*        optionData={this.state.optionsPermissions}*/}
+                            {/*    />*/}
+                            {/*</div>*/}
 
-                            <div style={{paddingTop: '220px'}} className="column">
+                            <div style={{paddingTop: '180px'}} className="column">
                                 <div style={{position: 'absolute', right: '20px', bottom: '20px'}}>
                                     <button onClick={this.handleSubmit}
                                             className={this.state.isSubmitting ? 'button is-primary is-loading' : 'button is-primary'}>

@@ -53,6 +53,7 @@ function Edit() {
     }, [])
 
     function setData(data) {
+        console.log(data)
         setItemName(data.name)
         setFormData({
             name: data.name,

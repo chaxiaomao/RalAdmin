@@ -195,7 +195,7 @@ class Assigment extends React.Component<IModalProps, any> {
                                 />
                             </div>
 
-                            <div style={{paddingTop: '220px'}} className="column">
+                            <div style={{paddingTop: '180px'}} className="column">
                                 <div style={{position: 'absolute', right: '20px', bottom: '20px'}}>
                                     <button onClick={this.handleSubmit}
                                             className={this.state.isSubmitting ? 'button is-primary is-loading' : 'button is-primary'}>
