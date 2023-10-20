@@ -119,7 +119,7 @@ class XModal extends React.Component<IModalProps, IModalState> {
         return (
             <div className={this.state.visible ? 'modal is-active fade show' : 'modal is-active fade'}>
                 <div onClick={this.handleHide} className={this.state.visible ? 'modal-background fade show' : 'modal-background fade'}></div>
-                <div className={this.state.visible ? "modal-card animate__animated animate__fadeInDown" : "modal-card animate__animated animate__fadeOutUp"}>
+                <div style={{marginTop: '60px'}} className={this.state.visible ? "modal-card animate__animated animate__fadeInDown" : "modal-card modal-pos animate__animated animate__fadeOutUp"}>
                     <header className="modal-card-head">
                         <p className="modal-card-title">{this.props.title ? this.props.title : '操作确认'}</p>
                         <button className="delete" onClick={this.handleHide}></button>
@@ -127,20 +127,27 @@ class XModal extends React.Component<IModalProps, IModalState> {
                     <section className="modal-card-body">
                         {this.props.content ? this.props.content : '确认执行改操作吗?'}
                     </section>
-                    <footer className="modal-card-foot">
-                        <XButton
-                            text="是"
-                            color="success"
-                            onClick={this.handleConfirm}
-                            />
-                        <XButton
-                            text="否"
-                            color="danger"
-                            onClick={this.handleHide}
-                            />
+                    <footer style={{height: '60px'}} className="modal-card-foot">
+                        <div style={{position: 'absolute', right: '20px', bottom: '20px'}}>
+                            <XButton
+                                color="success"
+                                optionClass="btn-icon"
+                                onClick={this.handleConfirm}
+                            >
+                                <span><i className="fa fa-check"></i></span>
+                            </XButton>
+                            <XButton
+                                color="danger"
+                                optionClass="btn-icon"
+                                onClick={this.handleHide}
+                            >
+                                <span><i className="fa fa-close"></i></span>
+                            </XButton>
+                        </div>
                         {/*<a className="button is-success" onClick={this.handleConfirm}>Save changes</a>*/}
                         {/*<a className="button" onClick={this.handleHide}>Cancel</a>*/}
                     </footer>
+
                 </div>
             </div>
         )

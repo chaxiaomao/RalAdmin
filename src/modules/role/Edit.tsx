@@ -31,7 +31,7 @@ function Edit() {
             httpGet({
                 url: '/admin/role/edit',
                 queryParams: {id: id}
-            }).then(async res => {
+            }).then(res => {
                 if (res.meta.code == httpCode.SUCCESS) {
                     setData(res.data)
                 }
@@ -71,7 +71,7 @@ function Edit() {
             data: JSON.stringify({
                 Role: formData
             })
-        }).then(async res => {
+        }).then(res => {
             if (res.meta.code == httpCode.SUCCESS) {
                 setData(res.data)
                 setErrors({});

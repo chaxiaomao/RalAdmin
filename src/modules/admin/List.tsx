@@ -11,6 +11,8 @@ import XCard from "../../components/card/XCard.tsx";
 import XModal from "../../components/alert/XModal.tsx";
 import XLoading from "../../components/loading/XLoading.tsx";
 import XNotification from "../../components/alert/XNotificition.tsx";
+import {Tooltip} from "react-tooltip";
+import Assigment from "./Assigment.tsx";
 
 function List() {
 
@@ -23,6 +25,7 @@ function List() {
     const [currentPageRows, setCurrentPageRows] = useState(10);
     const [checkedItems, setCheckedItems] = useState({});
     const [checkedItemsAll, setCheckedItemsAll] = useState(false);
+    const [modalId, setModalId] = useState(0);
 
     // 创建一个函数来处理复选框状态的变化
     const handleCheckboxChange = (item) => {
@@ -132,8 +135,15 @@ function List() {
         })
     }
 
+    const handleAssigment = (id) => {
+        // setModalId(id)
+        Assigment.show({title: '', data: id})
+    }
+
     return (
         <XCard>
+
+            {/*{modalId > 0 ? <Assigment onClose={() => handleAssigment(0)} /> : ''}*/}
 
             <div className="columns">
                 <div className="column is-3">
@@ -239,15 +249,27 @@ function List() {
                                 <td>
 
                                     <NavLink to={'/admin/user/edit?id=' + item.id}
-                                             className="btn btn-success btn-icon btn-sm">
+                                             className="btn btn-success btn-icon btn-sm item-edit">
                                         <i className="fa fa-edit"></i>
                                     </NavLink>
 
+                                    {/*<NavLink*/}
+                                    {/*    to={'/admin/user/assigment?id=' + item.id}*/}
+                                    {/*    className="btn btn-success btn-icon btn-sm item-assigment">*/}
+                                    {/*    <i className="fa fa-tree"></i>*/}
+                                    {/*</NavLink>*/}
+
+                                    <XButton
+                                        color="success"
+                                        optionClass="btn-icon btn-sm item-assigment"
+                                        onClick={() => handleAssigment(item.id)}
+                                    >
+                                        <i className="fa fa-tree"></i>
+                                    </XButton>
 
                                     <XButton
                                         color="danger"
-                                        optionClass="btn-icon btn-sm"
-
+                                        optionClass="btn-icon btn-sm item-delete"
                                         onClick={() => handleDelete(item.id)}
                                     >
                                         <i className="fa fa-times"></i>
@@ -267,6 +289,9 @@ function List() {
                 onPageRowChange={handlePageRow}
             />
 
+            <Tooltip anchorSelect=".item-edit" place="top" className="tooltip-a">编辑</Tooltip>
+            <Tooltip anchorSelect=".item-assigment" place="top" className="tooltip-a">分配</Tooltip>
+            <Tooltip anchorSelect=".item-delete" place="top" className="tooltip-a">删除</Tooltip>
 
         </XCard>
     );

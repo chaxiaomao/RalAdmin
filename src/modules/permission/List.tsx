@@ -276,7 +276,6 @@ function List() {
             />
 
             <Tooltip anchorSelect=".item-edit" place="top" className="tooltip-a">编辑</Tooltip>
-            <Tooltip anchorSelect=".item-assigment" place="top" className="tooltip-a">分配</Tooltip>
             <Tooltip anchorSelect=".item-delete" place="top" className="tooltip-a">删除</Tooltip>
 
         </XCard>

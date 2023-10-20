@@ -23,8 +23,8 @@ import LoginPage from "../pages/LoginPageCard.tsx";
 import {fakeAuthProvider} from "./auth.tsx";
 
 /// modules
-import {EditAdmin, ListAdmin} from "../modules/admin/index.tsx";
-import {EditRole, ListRole, AssigmentPermission} from "../modules/role/index.tsx";
+import {EditAdmin, ListAdmin, AssigmentAdmin} from "../modules/admin/index.tsx";
+import {EditRole, ListRole, AssigmentRole} from "../modules/role/index.tsx";
 import {EditPermission, ListPermission} from "../modules/permission/index.tsx";
 
 
@@ -94,6 +94,13 @@ export const getRoutes = () => {
                             },
                         },
                         {
+                            path: 'user/assigment?',
+                            Component: AssigmentAdmin,
+                            handle: {
+                                crumb: '分配'
+                            },
+                        },
+                        {
                             path: 'role',
                             Component: ListRole,
                             handle: {
@@ -116,7 +123,7 @@ export const getRoutes = () => {
                         },
                         {
                             path: 'role/assigment?',
-                            Component: AssigmentPermission,
+                            Component: AssigmentRole,
                             handle: {
                                 crumb: '分配'
                             },

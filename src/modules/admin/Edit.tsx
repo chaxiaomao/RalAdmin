@@ -34,7 +34,7 @@ function Edit() {
             httpGet({
                 url: '/admin/user/edit',
                 queryParams: {id: id}
-            }).then(async res => {
+            }).then(res => {
                 if (res.meta.code == httpCode.SUCCESS) {
                     setData(res.data)
                 }
@@ -79,7 +79,7 @@ function Edit() {
             data: JSON.stringify({
                 BeUser: formData
             })
-        }).then(async res => {
+        }).then(res => {
             if (res.meta.code == httpCode.SUCCESS) {
                 setData(res.data)
                 setErrors({});

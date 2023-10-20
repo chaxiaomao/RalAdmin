@@ -56,10 +56,12 @@ class Assigment extends React.Component<IModalProps, any> {
         this.state = {
             visible: true,
             isSubmitting: false,
-            initItemOptions: {},
-            itemOptions: {},
-            itemName: '',
-            formData: {},
+            assignmentRoles: {},
+            assignmentPermissions: {},
+            optionsRoles: {},
+            optionsPermissions: {},
+            postItemRoles: {},
+            postItemPermissions: {}
         }
     }
 
@@ -68,14 +70,17 @@ class Assigment extends React.Component<IModalProps, any> {
         let id = this.props.data;
         if (id) {
             httpGet({
-                url: '/admin/assignment/role-options',
+                url: '/admin/assignment/user-options',
                 queryParams: {id: id}
             }).then(res => {
                 if (res.meta.code == httpCode.SUCCESS) {
                     this.setState({
-                        itemOptions: res.data.options,
-                        initItemOptions: res.data.children,
-                        itemName: id,
+                        optionsPermissions: res.data.permissions,
+                        optionsRoles: res.data.roles,
+                        assignmentRoles: res.data.assignmentRoles,
+                        assignmentPermissions: res.data.assignmentPermissions,
+                        postItemRoles: res.data.assignmentRoles,
+                        postItemPermissions: res.data.assignmentPermissions,
                     })
                 }
             }).catch(e => {})
@@ -147,17 +152,39 @@ class Assigment extends React.Component<IModalProps, any> {
         });
     };
 
+    private handleRoleChange = (data) => {
+        let fd = [];
+        Object.keys(data).map((key, idx) => {
+            fd.push(data[key]);
+        })
+        // setFormData([...formData, data.value]);
+        this.setState({
+            postItemRoles: fd
+        });
+    };
 
     private handleSubmit = () => {
         this.setState({
             isSubmitting: true
         });
 
+        let items = [];
+        Object.keys(this.state.postItemRoles).map((key, idx) => {
+            items.push(this.state.postItemRoles[key]);
+        })
+        Object.keys(this.state.postItemPermissions).map((key, idx) => {
+            items.push(this.state.postItemPermissions[key]);
+        })
+        // let items = [...this.state.postItemRoles, ...this.state.postItemPermissions];
+        // let items = this.state.postItemRoles.concat(this.state.postItemPermissions);
+
         httpPost({
-            url: '/admin/role/assigment-item?id=' + this.state.itemName,
+            url: '/admin/assignment/assign?id=' + this.props.data,
             alert: true,
             data: JSON.stringify({
-                items: this.state.postItemPermissions,
+                items: items,
+                // roles: this.state.postItemRoles,
+                // permission: this.state.postItemPermissions,
             })
         }).then(res => {
             if (res.meta.code == httpCode.SUCCESS) {
@@ -182,16 +209,27 @@ class Assigment extends React.Component<IModalProps, any> {
                     <div className={this.state.visible ? "animate__animated animate__fadeIn" : "animate__animated animate__fadeOut"}>
                         <XCard xStyle={{ height: '100%'}}>
 
-                            <div className="column">
-                                <p>{this.state.itemName} 权限</p>
+                            <div className="field">
+                                <p>分配用户</p>
                             </div>
 
-                            <div className="column">
+                            <div className="field">
+                                <label>角色</label>
                                 <XMultipleSelect
-                                    initValue={this.state.initItemOptions}
+                                    initValue={this.state.assignmentRoles}
+                                    // value={formData.status}
+                                    onChange={this.handleRoleChange}
+                                    optionData={this.state.optionsRoles}
+                                />
+                            </div>
+
+                            <div className="field">
+                                <label>权限</label>
+                                <XMultipleSelect
+                                    initValue={this.state.assignmentPermissions}
                                     // value={formData.status}
                                     onChange={this.handlePermissionChange}
-                                    optionData={this.state.itemOptions}
+                                    optionData={this.state.optionsPermissions}
                                 />
                             </div>
 
@@ -211,6 +249,7 @@ class Assigment extends React.Component<IModalProps, any> {
                             </div>
 
                         </XCard>
+
                     </div>
                 </div>
 

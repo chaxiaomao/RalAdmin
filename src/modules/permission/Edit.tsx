@@ -33,7 +33,7 @@ function Edit() {
             httpGet({
                 url: '/admin/permission/edit',
                 queryParams: {id: id}
-            }).then(async res => {
+            }).then(res => {
                 if (res.meta.code == httpCode.SUCCESS) {
                     setData(res.data)
                 }
@@ -42,7 +42,7 @@ function Edit() {
 
         httpGet({
             url: '/admin/route/index',
-        }).then(async res => {
+        }).then(res => {
             if (res.meta.code == httpCode.SUCCESS) {
                 setRouteOptions(res.data.available)
             }
@@ -81,7 +81,7 @@ function Edit() {
             data: JSON.stringify({
                 Permission: formData
             })
-        }).then(async res => {
+        }).then(res => {
             if (res.meta.code == httpCode.SUCCESS) {
                 setData(res.data)
                 setErrors({});

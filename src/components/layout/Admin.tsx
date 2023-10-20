@@ -52,7 +52,7 @@ function Layout() {
                     <div className="column">
 
 
-                        <div className="main-panel">
+                        <div id="main-panel" className="main-panel">
                             {/*{isLoading ? <Loading/> : ''}*/}
 
                             <Header/>

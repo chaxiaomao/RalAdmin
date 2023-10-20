@@ -12,6 +12,7 @@ import XModal from "../../components/alert/XModal.tsx";
 import XLoading from "../../components/loading/XLoading.tsx";
 import XNotification from "../../components/alert/XNotificition.tsx";
 import {Tooltip} from "react-tooltip";
+import Assigment from "./Assigment.tsx";
 
 function List() {
 
@@ -133,6 +134,10 @@ function List() {
         })
     }
 
+    const handleAssigment = (id) => {
+        Assigment.show({title: '', data: id})
+    }
+
     return (
         <XCard>
 
@@ -250,12 +255,19 @@ function List() {
                                         <i className="fa fa-edit"></i>
                                     </NavLink>
 
-                                    <NavLink
-                                        to={'/admin/role/assigment?id=' + item.name}
-                                             className="btn btn-success btn-icon btn-sm item-assigment">
-                                        <i className="fa fa-tree"></i>
-                                    </NavLink>
+                                    {/*<NavLink*/}
+                                    {/*    to={'/admin/role/assigment?id=' + item.name}*/}
+                                    {/*         className="btn btn-success btn-icon btn-sm item-assigment">*/}
+                                    {/*    <i className="fa fa-tree"></i>*/}
+                                    {/*</NavLink>*/}
 
+                                    <XButton
+                                        color="success"
+                                        optionClass="btn-icon btn-sm item-assigment"
+                                        onClick={() => handleAssigment(item.name)}
+                                    >
+                                        <i className="fa fa-tree"></i>
+                                    </XButton>
 
                                     <XButton
                                         color="danger"

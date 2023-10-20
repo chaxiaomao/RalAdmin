@@ -59,8 +59,13 @@ body {
   padding: .6rem;
 }
 
+.table {
+  margin-bottom: 0;
+}
+
 .tabs a {
   color: #4a4a4a;
+  padding: 0.5em 0;
   //color: #363636;
   transition: color 386ms ease-out;
 }
@@ -69,6 +74,56 @@ body {
   color: #00d1b2;
   border-bottom-color: #00d1b2;
 }
+
+.modal-card-head, .modal-card-foot {
+  border: none;
+  background-color: #fff;
+}
+
+.modal, .notification {
+  width: calc(100% + 260px);
+}
+
+.modal {
+  --animate-duration: 600ms;
+  --animate-delay: 0.3s;
+}
+
+.modal.is-active {
+  display: block;
+}
+
+.modal .modal-card-warp, .notification {
+  --animate-duration: 600ms;
+  --animate-delay: 0.3s;
+}
+
+.fade {
+  transition: opacity .15s linear
+}
+
+@media(prefers-reduced-motion: reduce) {
+  .fade {
+    transition: none
+  }
+}
+
+.fade:not(.show) {
+  opacity: 0
+}
+
+.modal-background.show {
+  opacity: .3 !important;
+}
+
+
+.modal-background.fade {
+  opacity: 0;
+}
+
+//.modal-background {
+//  background-color: rgba(10,10,10);
+//}
 
 /// LOGIN
 #login {
@@ -122,5 +177,9 @@ body {
 .form-label {
   margin-top: 8px;
   text-align: right;
+}
+
+/// tooltip
+.tooltip-a {
 }
 
