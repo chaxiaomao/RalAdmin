@@ -183,8 +183,6 @@ class Assigment extends React.Component<IModalProps, any> {
             alert: true,
             data: JSON.stringify({
                 items: items,
-                // roles: this.state.postItemRoles,
-                // permission: this.state.postItemPermissions,
             })
         }).then(res => {
             if (res.meta.code == httpCode.SUCCESS) {
@@ -223,15 +221,15 @@ class Assigment extends React.Component<IModalProps, any> {
                                 />
                             </div>
 
-                            {/*<div className="field">*/}
-                            {/*    <label>权限</label>*/}
-                            {/*    <XMultipleSelect*/}
-                            {/*        initValue={this.state.assignmentPermissions}*/}
-                            {/*        // value={formData.status}*/}
-                            {/*        onChange={this.handlePermissionChange}*/}
-                            {/*        optionData={this.state.optionsPermissions}*/}
-                            {/*    />*/}
-                            {/*</div>*/}
+                            <div className="field">
+                                <label>权限</label>
+                                <XMultipleSelect
+                                    initValue={this.state.assignmentPermissions}
+                                    // value={formData.status}
+                                    onChange={this.handlePermissionChange}
+                                    optionData={this.state.optionsPermissions}
+                                />
+                            </div>
 
                             <div style={{paddingTop: '180px'}} className="column">
                                 <div style={{position: 'absolute', right: '20px', bottom: '20px'}}>
