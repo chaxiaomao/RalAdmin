@@ -62,6 +62,7 @@ function List() {
             setCheckedItemsAll(false);
             XLoading.hide();
         }).catch(err => {
+            XLoading.hide();
 
         });
     }

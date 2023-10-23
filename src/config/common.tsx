@@ -5,6 +5,7 @@ export const status = {
 
 export const httpCode = {
     AUTH_EXPIRED : '401',
+    AUTH_NOT_ALLOWED : '403',
     SUCCESS : '000',
     FAIL : '001',
 }

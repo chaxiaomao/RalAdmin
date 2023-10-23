@@ -28,18 +28,6 @@ const getAuth = (header = {}) => {
     return headers;
 }
 
-async function alertAuth() {
-    await fakeAuthProvider.signout();
-
-    XNotification.show({title: '认证到期，3秒后跳转到登录..'})
-
-    let timeoutClose = setInterval(() => {
-        clearInterval(timeoutClose)
-        window.location.replace('/');
-    }, 3000)
-
-}
-
 export function httpGet({url, queryParams = {}, alert = false} : IHttpParams) {
 
     // 将参数对象转换为查询字符串
@@ -98,7 +86,17 @@ async function handleResp(response, alert = false) {
         const error =  response.statusText;
 
         if (response.status == httpCode.AUTH_EXPIRED) {
-            await alertAuth();
+            XNotification.show({title: '认证到期，3秒后跳转到登录。'})
+            await fakeAuthProvider.signout();
+            // let timeoutClose = setInterval(() => {
+            //     clearInterval(timeoutClose)
+            //     window.location.replace('/');
+            // }, 3000)
+            return Promise.reject(error);
+        }
+
+        if (response.status == httpCode.AUTH_NOT_ALLOWED) {
+            XNotification.show({title: '您没有执行此操作的权限。'})
             return Promise.reject(error);
         }
 
