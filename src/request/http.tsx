@@ -88,10 +88,10 @@ async function handleResp(response, alert = false) {
         if (response.status == httpCode.AUTH_EXPIRED) {
             XNotification.show({title: '认证到期，3秒后跳转到登录。'})
             await fakeAuthProvider.signout();
-            // let timeoutClose = setInterval(() => {
-            //     clearInterval(timeoutClose)
-            //     window.location.replace('/');
-            // }, 3000)
+            let timeoutClose = setInterval(() => {
+                clearInterval(timeoutClose)
+                window.location.replace('/');
+            }, 3000)
             return Promise.reject(error);
         }
 

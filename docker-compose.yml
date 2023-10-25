@@ -1,12 +1,10 @@
 version: '3'
 services:
-  rabel-admin:
-    #build:
-    #  context: .
-    image: node:18-alpine3.17
+  zyjs-admin:
+#    build:
+#      context: .
+    image: raladmin-zyjs-admin:latest
     #container_name: rabel-admin
     ports:
-      - "3000:3000"
-    volumes:
-      - ${pwd}:/app
+      - "8083:80"
     restart: always
