@@ -1,9 +1,9 @@
 version: '3'
 services:
   zyjs-admin:
-#    build:
-#      context: .
-    image: raladmin-zyjs-admin:latest
+    build:
+      context: .
+#    image: raladmin-zyjs-admin:latest
     #container_name: rabel-admin
     ports:
       - "8083:80"
