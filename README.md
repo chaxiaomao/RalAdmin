@@ -16,8 +16,9 @@ https://web.archive.org/web/20090406212254/http://azadcreative.com/2009/03/bulle
 https://expressjs.com/
 https://nextjs.org/
 
-#docker
-docker run -itd --name nodejs -p 3000:3000 -v ${pwd}:/var/www --restart=always node:18-alpine3.17
+#docker(https://mherman.org/blog/dockerizing-a-react-app/)
+docker run -itd --name zyjs_admin -p 30080:30080 -v ./:/app --restart=always node:18-alpine3.17
+docker run -itd --name zyjs_admin -p 30000:30000 -v {$PWD}:/app --restart=always node:18-alpine3.17
 
 #ui example
 https://versions.bulma.io/0.4.4/documentation/elements/button/
